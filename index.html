@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Дистилярій</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312091f'/%3E%3Cpath d='M32 8 19 28a16 16 0 1 0 26 0L32 8Z' fill='none' stroke='%23f3eefe' stroke-width='3.2' stroke-linejoin='round'/%3E%3Cpath d='M22 46c7 5 17 5 24-1' fill='none' stroke='%23f0b35a' stroke-width='2.7' stroke-linecap='round'/%3E%3Ccircle cx='45' cy='18' r='2.2' fill='%23f0b35a'/%3E%3Cpath d='M48 10v4M46 12h4' stroke='%23f0b35a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="icon-distillery" viewBox="0 0 64 64">
+      <rect x="0" y="0" width="64" height="64" rx="14" stroke="none" fill="currentColor"></rect>
+      <path d="M32 8 19 28a16 16 0 1 0 26 0L32 8z" stroke="var(--logo-ink)" stroke-width="3.2" fill="none"></path>
+      <path d="M22 46c7 5 17 5 24-1" stroke="var(--logo-flame)" stroke-width="2.7" fill="none"></path>
+      <circle cx="45" cy="18" r="2.2" stroke="none" fill="var(--logo-flame)"></circle>
+      <path d="M48 10v4" stroke="var(--logo-flame)"></path>
+      <path d="M46 12h4" stroke="var(--logo-flame)"></path>
+    </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path d="M20 15.5A8.5 8.5 0 0 1 8.5 4a7 7 0 1 0 11.5 11.5z"></path>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="m4.93 4.93 1.41 1.41"></path>
+      <path d="m17.66 17.66 1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="m6.34 17.66-1.41 1.41"></path>
+      <path d="m19.07 4.93-1.41 1.41"></path>
+    </symbol>
+    <symbol id="icon-wheat" viewBox="0 0 24 24">
+      <path d="M12 22V2"></path>
+      <path d="M7 7c3 0 5 2 5 5"></path>
+      <path d="M17 7c-3 0-5 2-5 5"></path>
+      <path d="M6 13c3 0 6 2 6 6"></path>
+      <path d="M18 13c-3 0-6 2-6 6"></path>
+      <path d="M9 3c2 0 3 1 3 3"></path>
+      <path d="M15 3c-2 0-3 1-3 3"></path>
+    </symbol>
+    <symbol id="icon-flask" viewBox="0 0 24 24">
+      <path d="M9 2h6"></path>
+      <path d="M10 2v6l-5.5 9.5A3 3 0 0 0 7.1 22h9.8a3 3 0 0 0 2.6-4.5L14 8V2"></path>
+      <path d="M7.5 16h9"></path>
+    </symbol>
+    <symbol id="icon-droplet" viewBox="0 0 24 24">
+      <path d="M12 2.5 6.5 10A7 7 0 1 0 17.5 10L12 2.5z"></path>
+    </symbol>
+    <symbol id="icon-thermometer" viewBox="0 0 24 24">
+      <path d="M14 14.8V5a4 4 0 0 0-8 0v9.8a6 6 0 1 0 8 0z"></path>
+      <path d="M10 6v10"></path>
+    </symbol>
+    <symbol id="icon-gauge" viewBox="0 0 24 24">
+      <path d="M4 14a8 8 0 0 1 16 0"></path>
+      <path d="M12 14l4-5"></path>
+      <path d="M5 19h14"></path>
+    </symbol>
+    <symbol id="icon-scale" viewBox="0 0 24 24">
+      <path d="M12 3v18"></path>
+      <path d="M5 7h14"></path>
+      <path d="M6 7l-3 6h6L6 7z"></path>
+      <path d="M18 7l-3 6h6l-3-6z"></path>
+    </symbol>
+    <symbol id="icon-percent" viewBox="0 0 24 24">
+      <path d="M19 5 5 19"></path>
+      <circle cx="7" cy="7" r="2"></circle>
+      <circle cx="17" cy="17" r="2"></circle>
+    </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+      <path d="M12 2v3"></path>
+      <path d="M12 19v3"></path>
+      <path d="m4.93 4.93 2.12 2.12"></path>
+      <path d="m16.95 16.95 2.12 2.12"></path>
+      <path d="M2 12h3"></path>
+      <path d="M19 12h3"></path>
+      <path d="m4.93 19.07 2.12-2.12"></path>
+      <path d="m16.95 7.05 2.12-2.12"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </symbol>
+    <symbol id="icon-alembic" viewBox="0 0 24 24">
+      <path d="M8 3h5"></path>
+      <path d="M9 3v5l-4 7a4 4 0 0 0 3.5 6h4a4 4 0 0 0 3.5-6l-4-7V3"></path>
+      <path d="M7 15h8"></path>
+      <path d="M15 8h3a3 3 0 0 1 0 6h-1"></path>
+      <path d="M20 14v5"></path>
+    </symbol>
+    <symbol id="icon-bottle" viewBox="0 0 24 24">
+      <path d="M10 2h4"></path>
+      <path d="M10.5 2v5.2L8 10v9a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-9l-2.5-2.8V2"></path>
+      <path d="M9 14h6"></path>
+      <path d="M9 18h6"></path>
+    </symbol>
+    <symbol id="icon-printer" viewBox="0 0 24 24">
+      <path d="M6 9V3h12v6"></path>
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+      <path d="M6 14h12v7H6z"></path>
+      <path d="M18 12h.01"></path>
+    </symbol>
+  </svg>
+  <main>
+    <header>
+      <div>
+        <h1>
+          <button class="brand-home" id="homeOpen" type="button" aria-label="На головну">
+            дистилярій
+          </button>
+        </h1>
+        <p class="subtitle">Калькулятор для браги, сирцю, розбавлення та оцінки спирту в кубі. Значення орієнтовні, з відкритими коефіцієнтами.</p>
+      </div>
+      <div class="header-actions">
+        <div class="efficiency-strip" aria-label="Ефективність процесу">
+          <button class="efficiency-chip" id="calcEfficiencyOpen" type="button">
+            <span>Розрахункова ефективність</span>
+            <strong id="calcEfficiencyValue">—</strong>
+          </button>
+          <button class="efficiency-chip" id="actualEfficiencyOpen" type="button" hidden>
+            <span>Фактична ефективність</span>
+            <strong id="actualEfficiencyValue">—</strong>
+          </button>
+        </div>
+        <button class="theme-toggle top-icon-button" id="settingsOpen" type="button" aria-label="Загальні налаштування" title="Загальні налаштування">
+          <svg class="icon"><use href="#icon-alembic"></use></svg>
+        </button>
+        <div class="badge"><svg class="icon"><use href="#icon-thermometer"></use></svg>калібрування: 20 °C</div>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Розділи калькулятора">
+      <button class="tab" type="button" data-tab="mash" aria-selected="false"><svg class="icon"><use href="#icon-wheat"></use></svg>Вихід сирцю</button>
+      <button class="tab" type="button" data-tab="raw" aria-selected="false"><svg class="icon"><use href="#icon-flask"></use></svg>Ректифікація</button>
+      <button class="tab" type="button" data-tab="final" aria-selected="false"><svg class="icon"><use href="#icon-bottle"></use></svg>Фінальний продукт</button>
+    </nav>
+    <nav class="tool-tabs" aria-label="Додаткові інструменти">
+      <button class="tab tool-tab" type="button" data-tab="dilute" aria-selected="false"><svg class="icon"><use href="#icon-droplet"></use></svg>Розбавлення</button>
+      <button class="tab tool-tab" type="button" data-tab="boiler" aria-selected="false"><svg class="icon"><use href="#icon-thermometer"></use></svg>Спирт у кубі</button>
+    </nav>
+
+    <div class="workspace start-screen">
+      <section>
+        <div class="panel active welcome-panel" id="welcome">
+          <h2><svg class="icon"><use href="#icon-distillery"></use></svg>З чого почати</h2>
+          <div class="intro-grid">
+            <button class="intro-item" type="button" data-intro-tab="mash">
+              <svg class="icon"><use href="#icon-wheat"></use></svg>
+              <h3>Вихід сирцю</h3>
+              <p>Оцінює потенційний абсолютний спирт із сировини та орієнтовний об'єм сирцю потрібної міцності.</p>
+            </button>
+            <button class="intro-item" type="button" data-intro-tab="raw">
+              <svg class="icon"><use href="#icon-flask"></use></svg>
+              <h3>Ректифікація</h3>
+              <p>Рахує голови, хвости й тіло після відсікання з урахуванням міцності сирцю та температурної поправки.</p>
+            </button>
+            <button class="intro-item" type="button" data-intro-tab="final">
+              <svg class="icon"><use href="#icon-bottle"></use></svg>
+              <h3>Фінальний продукт</h3>
+              <p>Переводить ректифікат у вибраний напій, враховуючи міцність, хвости та нетоварний відбір для джину.</p>
+            </button>
+          </div>
+          <div class="intro-efficiency">
+            <svg class="icon"><use href="#icon-scale"></use></svg>
+            <div>
+              <h3>Ефективність</h3>
+              <p>У шапці показується розрахункова ефективність усього ланцюжка, а фактична з'явиться після введення реального об'єму в одному з етапів.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="mash">
+          <h2><svg class="icon"><use href="#icon-wheat"></use></svg>Розрахунок виходу сирцю з сировини</h2>
+          <div class="grid">
+            <label>Сировина
+              <select id="feedstock">
+                <option value="sugar">Цукор</option>
+                <option value="flour" selected>Борошно</option>
+              </select>
+            </label>
+            <label>Маса сировини, кг
+              <input id="feedMass" type="number" min="0" step="0.1" value="50">
+            </label>
+            <label>Міцність очікуваного сирцю, %
+              <input id="rawAbvFromMash" type="number" min="1" max="99" step="0.5" value="30">
+            </label>
+          </div>
+          <p class="hint">Вміст цукру або крохмалю та базовий коефіцієнт виходу беруться з глобальних налаштувань обладнання.</p>
+        </div>
+
+        <div class="panel" id="raw">
+          <h2><svg class="icon"><use href="#icon-flask"></use></svg>Ректифікація</h2>
+          <div class="grid">
+            <label>Об'єм сирцю, л
+              <input id="rawVolume" type="number" min="0" step="0.1" value="53.67">
+            </label>
+            <label>Показ спиртометра, %
+              <input id="rawMeterAbv" type="number" min="0" max="100" step="0.1" value="30">
+            </label>
+            <label>Температура проби, °C
+              <input id="sampleTemp" type="number" min="-10" max="60" step="0.1" value="20">
+            </label>
+            <label>Міцність продукту після ректифікації, %
+              <input id="productAbv" type="number" min="1" max="99.9" step="0.1" value="95">
+            </label>
+            <label><span class="label-row">Голови, % від АС <span class="help" tabindex="0" data-tip="Частка абсолютного спирту, яку плануєте відокремити як головну фракцію. Типово це кілька відсотків від АС у сирці.">?</span></span>
+              <span class="range-value" id="headsValue">8%</span>
+              <input id="headsPct" type="range" min="0" max="30" step="0.5" value="8">
+            </label>
+            <label><span class="label-row">Хвости, % від АС <span class="help" tabindex="0" data-tip="Частка абсолютного спирту, яку не беремо в основний продукт через хвостові фракції або зупинку відбору.">?</span></span>
+              <span class="range-value" id="tailsValue">10%</span>
+              <input id="tailsPct" type="range" min="0" max="50" step="0.5" value="10">
+            </label>
+          </div>
+          <p class="hint">Температурна поправка є наближенням: для теплого зразка фактичну міцність зменшуємо приблизно на 0.3 % об. за кожен градус вище 20 °C.</p>
+        </div>
+
+        <div class="panel" id="final">
+          <h2><svg class="icon"><use href="#icon-bottle"></use></svg>Фінальний продукт</h2>
+          <div class="drink-options" aria-label="Вибір фінального продукту">
+            <button class="final-drink-option" type="button" data-drink="gin" aria-pressed="true">Джин 42%</button>
+            <button class="final-drink-option" type="button" data-drink="distillate" aria-pressed="false">Дистилят 65%</button>
+            <button class="final-drink-option" type="button" data-drink="vodka" aria-pressed="false">Напій 40%</button>
+          </div>
+          <div class="grid">
+            <label>Об'єм ректифікату, л
+              <input id="finalSourceVolume" type="number" min="0" step="0.1" value="13.90">
+            </label>
+            <label>Міцність ректифікату, %
+              <input id="finalSourceAbv" type="number" min="0.1" max="99.9" step="0.1" value="95">
+            </label>
+            <label>Хвости, % від АС
+              <span class="range-value" id="finalTailsValue">10%</span>
+              <input id="finalTailsPct" type="range" min="0" max="60" step="0.5" value="10">
+            </label>
+            <label class="conditional" id="finalGinWasteLabel">Нетоварний відбір джину, % від АС
+              <input id="finalGinWastePct" type="number" min="0" max="60" step="0.5" value="8">
+            </label>
+          </div>
+          <p class="hint">Розрахунок переводить об'єм після ректифікації у вибраний фінальний продукт з урахуванням хвостів і нетоварного відбору.</p>
+        </div>
+
+        <div class="panel" id="dilute">
+          <h2><svg class="icon"><use href="#icon-droplet"></use></svg>Розбавлення водою</h2>
+          <div class="grid">
+            <label>Початковий об'єм, л
+              <input id="startVolume" type="number" min="0" step="0.1" value="5">
+            </label>
+            <label>Початкова міцність, %
+              <input id="startAbv" type="number" min="0" max="99.9" step="0.1" value="96">
+            </label>
+            <label>Бажана міцність, %
+              <input id="targetAbv" type="number" min="0.1" max="99.9" step="0.1" value="40">
+            </label>
+            <label><span class="label-row">Стискання суміші, % від доданої води <span class="help" tabindex="0" data-tip="Коли спирт змішується з водою, фінальний об'єм стає трохи меншим за просту суму об'ємів. Це і є контракція, або стискання суміші.">?</span></span>
+              <input id="contractionPct" type="number" min="0" max="8" step="0.1" value="3">
+            </label>
+          </div>
+          <p class="hint">Класичний розрахунок C1 x V1 = C2 x V2 не враховує повністю контракцію спирт-водної суміші, тому для точного доведення міцності фінальне коригування краще робити після відстоювання і виміру при 20 °C.</p>
+        </div>
+
+        <div class="panel" id="boiler">
+          <h2><svg class="icon"><use href="#icon-thermometer"></use></svg>Вміст спирту в кубі за температурою кипіння</h2>
+          <div class="grid">
+            <label>Температура в кубі, °C
+              <input id="boilerTemp" type="number" min="78.2" max="100" step="0.1" value="92">
+            </label>
+            <label>Атмосферний тиск, мм рт. ст.
+              <input id="pressure" type="number" min="650" max="820" step="1" value="760">
+            </label>
+          </div>
+          <p class="hint">Оцінка побудована на інтерполяції таблиці кипіння водно-спиртової суміші при 760 мм рт. ст. Поправка на тиск приблизна: нижчий тиск знижує температуру кипіння.</p>
+        </div>
+
+        <div class="settings-modal" id="settingsModal" hidden>
+          <div class="settings-sheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+            <div class="panel-heading">
+              <h2 id="settingsTitle"><svg class="icon"><use href="#icon-alembic"></use></svg>Загальні налаштування</h2>
+              <button class="icon-button" id="settingsClose" type="button" aria-label="Закрити налаштування">×</button>
+            </div>
+          <div class="method-options" aria-label="Метод перегону">
+            <button class="method-option" type="button" data-method="pot" aria-pressed="false">Простий перегін</button>
+            <button class="method-option" type="button" data-method="column" aria-pressed="false">Колона з укріпленням</button>
+            <button class="method-option" type="button" data-method="reflux" aria-pressed="true">Ректифікація</button>
+            <input id="distillMethod" type="hidden" value="reflux">
+          </div>
+          <div class="grid">
+            <label>Діаметр колони, мм
+              <input id="columnDiameter" type="number" min="20" max="120" step="1" value="38">
+            </label>
+            <label>Висота насадкової частини, см
+              <input id="columnHeight" type="number" min="0" max="250" step="1" value="80">
+            </label>
+            <label>База виходу з крохмалю
+              <select id="starchYieldProfile">
+                <option value="theory">0.718 - теоретичний максимум</option>
+                <option value="good">0.61 - хороший реальний</option>
+                <option value="average">0.56 - середній побутовий</option>
+                <option value="weak" selected>0.46 - обережний</option>
+              </select>
+            </label>
+            <label>Вміст цукру в цукрі, %
+              <input id="sugarExtractSetting" type="number" min="0" max="100" step="0.5" value="100">
+            </label>
+            <label>Крохмаль у борошні, %
+              <input id="flourExtractSetting" type="number" min="0" max="100" step="0.5" value="70">
+            </label>
+            <label class="checkbox-label">
+              <input id="applyGear" type="checkbox" checked>
+              Вплив на розрахунки
+            </label>
+          </div>
+          <p class="hint">Це не заміна реальних режимів перегону. Якщо увімкнено вплив на розрахунки, профіль і параметри обладнання дають м'яку поправку там, де це можливо.</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="result" aria-live="polite" hidden>
+        <h2><svg class="icon"><use href="#icon-gauge"></use></svg>Результат</h2>
+        <div id="metrics"></div>
+        <div class="formula" id="formula">
+          <button class="formula-toggle" id="formulaToggle" type="button" aria-expanded="false">Формула</button>
+          <div class="formula-body" id="formulaBody"></div>
+        </div>
+        <div class="note">Перевіряйте місцеві правила виробництва алкоголю і використовуйте калькулятор як технологічну підказку, а не як лабораторну таблицю.</div>
+      </aside>
+    </div>
+    <div class="footer-actions">
+      <button class="secondary-button footer-toggle" id="languageToggle" type="button" aria-label="English language" title="English language">EN</button>
+      <button class="secondary-button footer-toggle" id="themeToggle" type="button" aria-label="Перемкнути тему" title="Перемкнути тему">
+        <svg class="icon" id="themeIcon"><use href="#icon-sun"></use></svg>
+      </button>
+      <button class="print-button" id="printOpen" type="button">
+        <svg class="icon"><use href="#icon-printer"></use></svg>
+        Надрукувати
+      </button>
+    </div>
+
+    <div class="print-modal" id="printModal" hidden>
+      <div class="print-sheet" role="dialog" aria-modal="true" aria-labelledby="printTitle">
+        <div class="panel-heading">
+          <h2 id="printTitle"><svg class="icon"><use href="#icon-printer"></use></svg>Друк звіту</h2>
+          <button class="icon-button" id="printClose" type="button" aria-label="Закрити друк">×</button>
+        </div>
+        <div class="print-options">
+          <label class="checkbox-label"><input id="printMash" type="checkbox" checked> Вихід сирцю</label>
+          <label class="checkbox-label"><input id="printRaw" type="checkbox" checked> Ректифікація</label>
+          <label class="checkbox-label"><input id="printFinal" type="checkbox" checked> Фінальний продукт</label>
+          <label class="checkbox-label"><input id="printDilute" type="checkbox" checked> Розбавлення</label>
+          <label class="checkbox-label"><input id="printBoiler" type="checkbox" checked> Спирт у кубі</label>
+          <label class="checkbox-label"><input id="printEquipment" type="checkbox" checked> Загальні налаштування</label>
+        </div>
+        <div class="print-actions">
+          <button class="secondary-button" id="printCancel" type="button">Скасувати</button>
+          <button class="print-button" id="printBuild" type="button">
+            <svg class="icon"><use href="#icon-printer"></use></svg>
+            Сформувати
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="print-modal" id="efficiencyModal" hidden>
+      <div class="print-sheet" role="dialog" aria-modal="true" aria-labelledby="efficiencyTitle">
+        <div class="panel-heading">
+          <h2 id="efficiencyTitle"><svg class="icon"><use href="#icon-scale"></use></svg>Подробиці ефективності</h2>
+          <button class="icon-button" id="efficiencyClose" type="button" aria-label="Закрити подробиці">×</button>
+        </div>
+        <div class="efficiency-details" id="efficiencyDetails"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

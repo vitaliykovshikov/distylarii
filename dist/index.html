@@ -1,0 +1,2513 @@
+<!doctype html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Дистилярій</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312091f'/%3E%3Cpath d='M32 8 19 28a16 16 0 1 0 26 0L32 8Z' fill='none' stroke='%23f3eefe' stroke-width='3.2' stroke-linejoin='round'/%3E%3Cpath d='M22 46c7 5 17 5 24-1' fill='none' stroke='%23f0b35a' stroke-width='2.7' stroke-linecap='round'/%3E%3Ccircle cx='45' cy='18' r='2.2' fill='%23f0b35a'/%3E%3Cpath d='M48 10v4M46 12h4' stroke='%23f0b35a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #f7f3ff;
+  --bg-aura-1: rgba(124, 58, 237, 0.13);
+  --bg-aura-2: rgba(183, 121, 31, 0.14);
+  --ink: #211827;
+  --muted: #6f617d;
+  --line: #ddd2ee;
+  --panel: #fffaff;
+  --field: #fbf7ff;
+  --accent: #7c3aed;
+  --accent-contrast: #ffffff;
+  --accent-2: #b7791f;
+  --soft: #f0e8ff;
+  --warn: #fff4df;
+  --warn-line: #eed19a;
+  --formula-ink: #3c2b5d;
+  --note-ink: #6f4712;
+  --logo-bg: #241036;
+  --logo-ink: #f3eefe;
+  --logo-flame: #f0b35a;
+  --shadow: 0 16px 38px rgba(54, 30, 80, 0.14);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #12091f;
+  --bg-aura-1: rgba(167, 139, 250, 0.20);
+  --bg-aura-2: rgba(240, 179, 90, 0.12);
+  --ink: #f3eefe;
+  --muted: #b7a8c9;
+  --line: #3a2853;
+  --panel: #1d102f;
+  --field: #28183d;
+  --accent: #a78bfa;
+  --accent-contrast: #1a1029;
+  --accent-2: #f0b35a;
+  --soft: #26183c;
+  --warn: #2c1c32;
+  --warn-line: #654a72;
+  --formula-ink: #dfd4f4;
+  --note-ink: #e8cfab;
+  --logo-bg: #12091f;
+  --logo-ink: #f3eefe;
+  --logo-flame: #f0b35a;
+  --shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
+}
+
+* { box-sizing: border-box; }
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 0%, var(--bg-aura-1), transparent 34%),
+    radial-gradient(circle at 82% 12%, var(--bg-aura-2), transparent 30%),
+    linear-gradient(135deg, var(--bg-aura-1), transparent 45%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+main {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 44px;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: end;
+  padding: 16px 0 22px;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1;
+  letter-spacing: 0.16em;
+}
+
+.brand-home {
+  display: block;
+  max-width: max-content;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  letter-spacing: inherit;
+  padding: 0;
+  text-align: left;
+  text-transform: lowercase;
+}
+
+.brand-home:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.subtitle {
+  margin: 12px 0 0;
+  color: var(--muted);
+  max-width: 720px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-self: end;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.efficiency-strip {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  color: var(--muted);
+}
+
+.efficiency-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: right;
+  box-shadow: none;
+}
+
+.efficiency-chip span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.efficiency-chip strong {
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.efficiency-chip.eff-low strong { color: #ef4444; }
+.efficiency-chip.eff-mid strong { color: #d89b16; }
+.efficiency-chip.eff-high strong { color: #16a34a; }
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 9px 12px;
+  box-shadow: var(--shadow);
+}
+
+.top-icon-button {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+}
+
+.top-icon-button .icon {
+  width: 21px;
+  height: 21px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0 8px;
+}
+
+.tool-tabs {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 84%, transparent);
+  color: var(--ink);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 9px 10px;
+  transition: 140ms ease;
+}
+
+.tab .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.tab[aria-selected="true"] {
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.tool-tab {
+  min-height: 38px;
+  font-size: 12px;
+  padding: 7px 10px;
+  min-width: 160px;
+}
+
+.tool-tab .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(310px, 0.9fr);
+  gap: 18px;
+  align-items: start;
+  min-width: 0;
+}
+
+.workspace.start-screen {
+  grid-template-columns: 1fr;
+}
+
+section, aside {
+  min-width: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.panel {
+  display: none;
+  padding: 20px;
+}
+
+.panel.active { display: block; }
+
+.welcome-panel {
+  min-height: 100%;
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.intro-item,
+.intro-efficiency {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--soft);
+  padding: 16px;
+}
+
+.intro-item {
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: 140ms ease;
+}
+
+.intro-item:hover,
+.intro-item:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.intro-item .icon,
+.intro-efficiency .icon {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.intro-item h3,
+.intro-efficiency h3 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+.intro-item p,
+.intro-efficiency p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.intro-efficiency {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  margin-top: 12px;
+}
+
+.intro-efficiency .icon {
+  margin-bottom: 0;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin: 0 0 16px;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+h2 .icon {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.label-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.help {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--accent-2);
+  cursor: help;
+  font-size: 12px;
+  line-height: 1;
+  outline: none;
+  flex: 0 0 auto;
+}
+
+.help::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 9px);
+  z-index: 4;
+  width: min(280px, 78vw);
+  transform: translateX(-50%);
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.35;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.help:hover::after,
+.help:focus-visible::after {
+  opacity: 1;
+}
+
+input, select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 650;
+  padding: 10px 12px;
+  outline: none;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  min-height: 18px;
+  accent-color: var(--accent);
+}
+
+input[type="range"] {
+  width: 100%;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  accent-color: var(--accent);
+}
+
+.range-value {
+  color: var(--accent-2);
+  font-weight: 850;
+}
+
+.checkbox-label {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+  color: var(--ink);
+}
+
+.drink-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.method-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.drink-option,
+.final-drink-option,
+.method-option {
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 9px 10px;
+}
+
+.drink-option[aria-pressed="true"],
+.final-drink-option[aria-pressed="true"],
+.method-option[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.settings-summary {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.settings-summary div {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+  padding: 10px;
+}
+
+.settings-summary span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.settings-summary strong {
+  font-size: 18px;
+}
+
+.settings-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(12, 6, 20, 0.58);
+  backdrop-filter: blur(8px);
+}
+
+.settings-modal[hidden] {
+  display: none;
+}
+
+.settings-sheet {
+  width: min(720px, 100%);
+  max-height: min(820px, calc(100vh - 36px));
+  overflow: auto;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.panel-heading h2 {
+  margin: 0;
+}
+
+.panel-heading h2 .icon {
+  color: var(--accent);
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.full { grid-column: 1 / -1; }
+
+.conditional[hidden] {
+  display: none;
+}
+
+.hint {
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 13px;
+  margin: 14px 0 0;
+}
+
+.result {
+  padding: 20px;
+  position: sticky;
+  top: 16px;
+}
+
+.result h2 { margin-bottom: 14px; }
+
+.metric {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.metric .icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-2);
+}
+
+.metric:first-of-type { border-top: 0; }
+
+.metric span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.metric strong {
+  font-size: clamp(18px, 2.3vw, 24px);
+  font-weight: 750;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.metric.primary {
+  grid-template-columns: auto 1fr;
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.metric.primary .icon {
+  width: 22px;
+  height: 22px;
+  color: var(--accent);
+}
+
+.metric.primary span {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.metric.primary strong {
+  grid-column: 1 / -1;
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 900;
+  text-align: left;
+}
+
+.metric.primary.has-action {
+  grid-template-columns: auto 1fr auto;
+}
+
+.metric.primary.has-action strong {
+  grid-column: 1 / 3;
+  align-self: center;
+}
+
+.metric.primary.has-action .metric-action {
+  grid-column: 3;
+  grid-row: 2;
+  align-self: center;
+}
+
+.metric-subhead {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 850;
+}
+
+.metric-field {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: end;
+  margin-top: 16px;
+  padding-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.metric-field span {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.metric-field input {
+  min-width: 0;
+}
+
+.metric.match-red strong { color: #ef4444; }
+.metric.match-yellow strong { color: #f0b35a; }
+.metric.match-green strong { color: #22c55e; }
+
+.metric-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  justify-self: end;
+  width: 52px;
+  height: 44px;
+  min-height: 44px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0;
+}
+
+.metric-action .icon {
+  width: 19px;
+  height: 19px;
+  color: currentColor;
+  display: block;
+  stroke: currentColor;
+}
+
+.metric-action .arrow {
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.footer-actions {
+  width: min(1180px, calc(100% - 32px));
+  margin: 18px auto 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.footer-toggle {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  font-weight: 700;
+}
+
+.print-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  padding: 10px 14px;
+  box-shadow: var(--shadow);
+}
+
+.print-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(12, 6, 20, 0.58);
+  backdrop-filter: blur(8px);
+}
+
+.print-modal[hidden] {
+  display: none;
+}
+
+.print-sheet {
+  width: min(620px, 100%);
+  max-height: min(760px, calc(100vh - 36px));
+  overflow: auto;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.print-options {
+  display: grid;
+  gap: 10px;
+}
+
+.print-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.efficiency-details {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-row span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.detail-row strong {
+  font-size: 20px;
+  text-align: right;
+}
+
+.drop-summary {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--soft) 72%, transparent);
+}
+
+.drop-summary h3 {
+  margin: 0 0 2px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.drop-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 8px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.drop-row strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.drop-row.drop-mid,
+.drop-row.drop-high {
+  border: 1px solid var(--warn-line);
+  background: color-mix(in srgb, var(--warn) 70%, transparent);
+}
+
+.drop-row.drop-high {
+  border-color: color-mix(in srgb, #ef4444 45%, var(--warn-line));
+  background: color-mix(in srgb, #ef4444 12%, var(--warn));
+}
+
+.drop-row.drop-mid strong,
+.drop-row.drop-high strong {
+  color: var(--note-ink);
+}
+
+.detail-formula {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--formula-ink);
+  line-height: 1.45;
+}
+
+.secondary-button {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 9px 12px;
+}
+
+.note {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--warn);
+  border: 1px solid var(--warn-line);
+  color: var(--note-ink);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.formula {
+  margin-top: 14px;
+  color: var(--formula-ink);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.formula-toggle {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--formula-ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  padding: 9px 12px;
+}
+
+.formula-body {
+  display: none;
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--soft);
+}
+
+.formula.open .formula-body {
+  display: block;
+}
+
+@media (max-width: 820px) {
+  main { width: min(100% - 20px, 680px); padding-top: 82px; }
+  header, .workspace { grid-template-columns: 1fr; }
+  .header-actions { justify-self: end; justify-content: flex-end; }
+  .efficiency-strip {
+    position: fixed;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    z-index: 11;
+    width: auto;
+    order: -1;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 0 0 8px 8px;
+    background: color-mix(in srgb, var(--panel) 90%, transparent);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+  }
+  .efficiency-chip { flex: 1; min-width: 0; justify-content: space-between; }
+  .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tool-tabs { justify-content: stretch; }
+  .tool-tab { flex: 1; min-width: 0; }
+  .grid { grid-template-columns: 1fr; }
+  .intro-grid { grid-template-columns: 1fr; }
+  .drink-options, .method-options, .settings-summary { grid-template-columns: 1fr; }
+  .footer-actions { width: min(100% - 20px, 680px); justify-content: stretch; }
+  .print-button { flex: 1; justify-content: center; }
+  .result { position: static; }
+}
+
+@media (max-width: 440px) {
+  main { width: min(100% - 20px, 100%); }
+  .panel { padding: 16px; overflow: hidden; }
+  h1 { font-size: 34px; }
+  h2 { font-size: 22px; }
+  .tabs { grid-template-columns: 1fr; }
+  .efficiency-strip { flex-direction: column; align-items: stretch; }
+  .metric { grid-template-columns: 1fr; }
+  .metric .icon { display: none; }
+  .metric strong { text-align: left; }
+  .metric.primary.has-action { grid-template-columns: 1fr auto; }
+  .metric.primary.has-action strong { grid-column: 1; }
+  .metric.primary.has-action .metric-action { grid-column: 2; }
+}
+</style>
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="icon-distillery" viewBox="0 0 64 64">
+      <rect x="0" y="0" width="64" height="64" rx="14" stroke="none" fill="currentColor"></rect>
+      <path d="M32 8 19 28a16 16 0 1 0 26 0L32 8z" stroke="var(--logo-ink)" stroke-width="3.2" fill="none"></path>
+      <path d="M22 46c7 5 17 5 24-1" stroke="var(--logo-flame)" stroke-width="2.7" fill="none"></path>
+      <circle cx="45" cy="18" r="2.2" stroke="none" fill="var(--logo-flame)"></circle>
+      <path d="M48 10v4" stroke="var(--logo-flame)"></path>
+      <path d="M46 12h4" stroke="var(--logo-flame)"></path>
+    </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path d="M20 15.5A8.5 8.5 0 0 1 8.5 4a7 7 0 1 0 11.5 11.5z"></path>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="m4.93 4.93 1.41 1.41"></path>
+      <path d="m17.66 17.66 1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="m6.34 17.66-1.41 1.41"></path>
+      <path d="m19.07 4.93-1.41 1.41"></path>
+    </symbol>
+    <symbol id="icon-wheat" viewBox="0 0 24 24">
+      <path d="M12 22V2"></path>
+      <path d="M7 7c3 0 5 2 5 5"></path>
+      <path d="M17 7c-3 0-5 2-5 5"></path>
+      <path d="M6 13c3 0 6 2 6 6"></path>
+      <path d="M18 13c-3 0-6 2-6 6"></path>
+      <path d="M9 3c2 0 3 1 3 3"></path>
+      <path d="M15 3c-2 0-3 1-3 3"></path>
+    </symbol>
+    <symbol id="icon-flask" viewBox="0 0 24 24">
+      <path d="M9 2h6"></path>
+      <path d="M10 2v6l-5.5 9.5A3 3 0 0 0 7.1 22h9.8a3 3 0 0 0 2.6-4.5L14 8V2"></path>
+      <path d="M7.5 16h9"></path>
+    </symbol>
+    <symbol id="icon-droplet" viewBox="0 0 24 24">
+      <path d="M12 2.5 6.5 10A7 7 0 1 0 17.5 10L12 2.5z"></path>
+    </symbol>
+    <symbol id="icon-thermometer" viewBox="0 0 24 24">
+      <path d="M14 14.8V5a4 4 0 0 0-8 0v9.8a6 6 0 1 0 8 0z"></path>
+      <path d="M10 6v10"></path>
+    </symbol>
+    <symbol id="icon-gauge" viewBox="0 0 24 24">
+      <path d="M4 14a8 8 0 0 1 16 0"></path>
+      <path d="M12 14l4-5"></path>
+      <path d="M5 19h14"></path>
+    </symbol>
+    <symbol id="icon-scale" viewBox="0 0 24 24">
+      <path d="M12 3v18"></path>
+      <path d="M5 7h14"></path>
+      <path d="M6 7l-3 6h6L6 7z"></path>
+      <path d="M18 7l-3 6h6l-3-6z"></path>
+    </symbol>
+    <symbol id="icon-percent" viewBox="0 0 24 24">
+      <path d="M19 5 5 19"></path>
+      <circle cx="7" cy="7" r="2"></circle>
+      <circle cx="17" cy="17" r="2"></circle>
+    </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+      <path d="M12 2v3"></path>
+      <path d="M12 19v3"></path>
+      <path d="m4.93 4.93 2.12 2.12"></path>
+      <path d="m16.95 16.95 2.12 2.12"></path>
+      <path d="M2 12h3"></path>
+      <path d="M19 12h3"></path>
+      <path d="m4.93 19.07 2.12-2.12"></path>
+      <path d="m16.95 7.05 2.12-2.12"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </symbol>
+    <symbol id="icon-alembic" viewBox="0 0 24 24">
+      <path d="M8 3h5"></path>
+      <path d="M9 3v5l-4 7a4 4 0 0 0 3.5 6h4a4 4 0 0 0 3.5-6l-4-7V3"></path>
+      <path d="M7 15h8"></path>
+      <path d="M15 8h3a3 3 0 0 1 0 6h-1"></path>
+      <path d="M20 14v5"></path>
+    </symbol>
+    <symbol id="icon-bottle" viewBox="0 0 24 24">
+      <path d="M10 2h4"></path>
+      <path d="M10.5 2v5.2L8 10v9a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-9l-2.5-2.8V2"></path>
+      <path d="M9 14h6"></path>
+      <path d="M9 18h6"></path>
+    </symbol>
+    <symbol id="icon-printer" viewBox="0 0 24 24">
+      <path d="M6 9V3h12v6"></path>
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+      <path d="M6 14h12v7H6z"></path>
+      <path d="M18 12h.01"></path>
+    </symbol>
+  </svg>
+  <main>
+    <header>
+      <div>
+        <h1>
+          <button class="brand-home" id="homeOpen" type="button" aria-label="На головну">
+            дистилярій
+          </button>
+        </h1>
+        <p class="subtitle">Калькулятор для браги, сирцю, розбавлення та оцінки спирту в кубі. Значення орієнтовні, з відкритими коефіцієнтами.</p>
+      </div>
+      <div class="header-actions">
+        <div class="efficiency-strip" aria-label="Ефективність процесу">
+          <button class="efficiency-chip" id="calcEfficiencyOpen" type="button">
+            <span>Розрахункова ефективність</span>
+            <strong id="calcEfficiencyValue">—</strong>
+          </button>
+          <button class="efficiency-chip" id="actualEfficiencyOpen" type="button" hidden>
+            <span>Фактична ефективність</span>
+            <strong id="actualEfficiencyValue">—</strong>
+          </button>
+        </div>
+        <button class="theme-toggle top-icon-button" id="settingsOpen" type="button" aria-label="Загальні налаштування" title="Загальні налаштування">
+          <svg class="icon"><use href="#icon-alembic"></use></svg>
+        </button>
+        <div class="badge"><svg class="icon"><use href="#icon-thermometer"></use></svg>калібрування: 20 °C</div>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Розділи калькулятора">
+      <button class="tab" type="button" data-tab="mash" aria-selected="false"><svg class="icon"><use href="#icon-wheat"></use></svg>Вихід сирцю</button>
+      <button class="tab" type="button" data-tab="raw" aria-selected="false"><svg class="icon"><use href="#icon-flask"></use></svg>Ректифікація</button>
+      <button class="tab" type="button" data-tab="final" aria-selected="false"><svg class="icon"><use href="#icon-bottle"></use></svg>Фінальний продукт</button>
+    </nav>
+    <nav class="tool-tabs" aria-label="Додаткові інструменти">
+      <button class="tab tool-tab" type="button" data-tab="dilute" aria-selected="false"><svg class="icon"><use href="#icon-droplet"></use></svg>Розбавлення</button>
+      <button class="tab tool-tab" type="button" data-tab="boiler" aria-selected="false"><svg class="icon"><use href="#icon-thermometer"></use></svg>Спирт у кубі</button>
+    </nav>
+
+    <div class="workspace start-screen">
+      <section>
+        <div class="panel active welcome-panel" id="welcome">
+          <h2><svg class="icon"><use href="#icon-distillery"></use></svg>З чого почати</h2>
+          <div class="intro-grid">
+            <button class="intro-item" type="button" data-intro-tab="mash">
+              <svg class="icon"><use href="#icon-wheat"></use></svg>
+              <h3>Вихід сирцю</h3>
+              <p>Оцінює потенційний абсолютний спирт із сировини та орієнтовний об'єм сирцю потрібної міцності.</p>
+            </button>
+            <button class="intro-item" type="button" data-intro-tab="raw">
+              <svg class="icon"><use href="#icon-flask"></use></svg>
+              <h3>Ректифікація</h3>
+              <p>Рахує голови, хвости й тіло після відсікання з урахуванням міцності сирцю та температурної поправки.</p>
+            </button>
+            <button class="intro-item" type="button" data-intro-tab="final">
+              <svg class="icon"><use href="#icon-bottle"></use></svg>
+              <h3>Фінальний продукт</h3>
+              <p>Переводить ректифікат у вибраний напій, враховуючи міцність, хвости та нетоварний відбір для джину.</p>
+            </button>
+          </div>
+          <div class="intro-efficiency">
+            <svg class="icon"><use href="#icon-scale"></use></svg>
+            <div>
+              <h3>Ефективність</h3>
+              <p>У шапці показується розрахункова ефективність усього ланцюжка, а фактична з'явиться після введення реального об'єму в одному з етапів.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="mash">
+          <h2><svg class="icon"><use href="#icon-wheat"></use></svg>Розрахунок виходу сирцю з сировини</h2>
+          <div class="grid">
+            <label>Сировина
+              <select id="feedstock">
+                <option value="sugar">Цукор</option>
+                <option value="flour" selected>Борошно</option>
+              </select>
+            </label>
+            <label>Маса сировини, кг
+              <input id="feedMass" type="number" min="0" step="0.1" value="50">
+            </label>
+            <label>Міцність очікуваного сирцю, %
+              <input id="rawAbvFromMash" type="number" min="1" max="99" step="0.5" value="30">
+            </label>
+          </div>
+          <p class="hint">Вміст цукру або крохмалю та базовий коефіцієнт виходу беруться з глобальних налаштувань обладнання.</p>
+        </div>
+
+        <div class="panel" id="raw">
+          <h2><svg class="icon"><use href="#icon-flask"></use></svg>Ректифікація</h2>
+          <div class="grid">
+            <label>Об'єм сирцю, л
+              <input id="rawVolume" type="number" min="0" step="0.1" value="53.67">
+            </label>
+            <label>Показ спиртометра, %
+              <input id="rawMeterAbv" type="number" min="0" max="100" step="0.1" value="30">
+            </label>
+            <label>Температура проби, °C
+              <input id="sampleTemp" type="number" min="-10" max="60" step="0.1" value="20">
+            </label>
+            <label>Міцність продукту після ректифікації, %
+              <input id="productAbv" type="number" min="1" max="99.9" step="0.1" value="95">
+            </label>
+            <label><span class="label-row">Голови, % від АС <span class="help" tabindex="0" data-tip="Частка абсолютного спирту, яку плануєте відокремити як головну фракцію. Типово це кілька відсотків від АС у сирці.">?</span></span>
+              <span class="range-value" id="headsValue">8%</span>
+              <input id="headsPct" type="range" min="0" max="30" step="0.5" value="8">
+            </label>
+            <label><span class="label-row">Хвости, % від АС <span class="help" tabindex="0" data-tip="Частка абсолютного спирту, яку не беремо в основний продукт через хвостові фракції або зупинку відбору.">?</span></span>
+              <span class="range-value" id="tailsValue">10%</span>
+              <input id="tailsPct" type="range" min="0" max="50" step="0.5" value="10">
+            </label>
+          </div>
+          <p class="hint">Температурна поправка є наближенням: для теплого зразка фактичну міцність зменшуємо приблизно на 0.3 % об. за кожен градус вище 20 °C.</p>
+        </div>
+
+        <div class="panel" id="final">
+          <h2><svg class="icon"><use href="#icon-bottle"></use></svg>Фінальний продукт</h2>
+          <div class="drink-options" aria-label="Вибір фінального продукту">
+            <button class="final-drink-option" type="button" data-drink="gin" aria-pressed="true">Джин 42%</button>
+            <button class="final-drink-option" type="button" data-drink="distillate" aria-pressed="false">Дистилят 65%</button>
+            <button class="final-drink-option" type="button" data-drink="vodka" aria-pressed="false">Напій 40%</button>
+          </div>
+          <div class="grid">
+            <label>Об'єм ректифікату, л
+              <input id="finalSourceVolume" type="number" min="0" step="0.1" value="13.90">
+            </label>
+            <label>Міцність ректифікату, %
+              <input id="finalSourceAbv" type="number" min="0.1" max="99.9" step="0.1" value="95">
+            </label>
+            <label>Хвости, % від АС
+              <span class="range-value" id="finalTailsValue">10%</span>
+              <input id="finalTailsPct" type="range" min="0" max="60" step="0.5" value="10">
+            </label>
+            <label class="conditional" id="finalGinWasteLabel">Нетоварний відбір джину, % від АС
+              <input id="finalGinWastePct" type="number" min="0" max="60" step="0.5" value="8">
+            </label>
+          </div>
+          <p class="hint">Розрахунок переводить об'єм після ректифікації у вибраний фінальний продукт з урахуванням хвостів і нетоварного відбору.</p>
+        </div>
+
+        <div class="panel" id="dilute">
+          <h2><svg class="icon"><use href="#icon-droplet"></use></svg>Розбавлення водою</h2>
+          <div class="grid">
+            <label>Початковий об'єм, л
+              <input id="startVolume" type="number" min="0" step="0.1" value="5">
+            </label>
+            <label>Початкова міцність, %
+              <input id="startAbv" type="number" min="0" max="99.9" step="0.1" value="96">
+            </label>
+            <label>Бажана міцність, %
+              <input id="targetAbv" type="number" min="0.1" max="99.9" step="0.1" value="40">
+            </label>
+            <label><span class="label-row">Стискання суміші, % від доданої води <span class="help" tabindex="0" data-tip="Коли спирт змішується з водою, фінальний об'єм стає трохи меншим за просту суму об'ємів. Це і є контракція, або стискання суміші.">?</span></span>
+              <input id="contractionPct" type="number" min="0" max="8" step="0.1" value="3">
+            </label>
+          </div>
+          <p class="hint">Класичний розрахунок C1 x V1 = C2 x V2 не враховує повністю контракцію спирт-водної суміші, тому для точного доведення міцності фінальне коригування краще робити після відстоювання і виміру при 20 °C.</p>
+        </div>
+
+        <div class="panel" id="boiler">
+          <h2><svg class="icon"><use href="#icon-thermometer"></use></svg>Вміст спирту в кубі за температурою кипіння</h2>
+          <div class="grid">
+            <label>Температура в кубі, °C
+              <input id="boilerTemp" type="number" min="78.2" max="100" step="0.1" value="92">
+            </label>
+            <label>Атмосферний тиск, мм рт. ст.
+              <input id="pressure" type="number" min="650" max="820" step="1" value="760">
+            </label>
+          </div>
+          <p class="hint">Оцінка побудована на інтерполяції таблиці кипіння водно-спиртової суміші при 760 мм рт. ст. Поправка на тиск приблизна: нижчий тиск знижує температуру кипіння.</p>
+        </div>
+
+        <div class="settings-modal" id="settingsModal" hidden>
+          <div class="settings-sheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+            <div class="panel-heading">
+              <h2 id="settingsTitle"><svg class="icon"><use href="#icon-alembic"></use></svg>Загальні налаштування</h2>
+              <button class="icon-button" id="settingsClose" type="button" aria-label="Закрити налаштування">×</button>
+            </div>
+          <div class="method-options" aria-label="Метод перегону">
+            <button class="method-option" type="button" data-method="pot" aria-pressed="false">Простий перегін</button>
+            <button class="method-option" type="button" data-method="column" aria-pressed="false">Колона з укріпленням</button>
+            <button class="method-option" type="button" data-method="reflux" aria-pressed="true">Ректифікація</button>
+            <input id="distillMethod" type="hidden" value="reflux">
+          </div>
+          <div class="grid">
+            <label>Діаметр колони, мм
+              <input id="columnDiameter" type="number" min="20" max="120" step="1" value="38">
+            </label>
+            <label>Висота насадкової частини, см
+              <input id="columnHeight" type="number" min="0" max="250" step="1" value="80">
+            </label>
+            <label>База виходу з крохмалю
+              <select id="starchYieldProfile">
+                <option value="theory">0.718 - теоретичний максимум</option>
+                <option value="good">0.61 - хороший реальний</option>
+                <option value="average">0.56 - середній побутовий</option>
+                <option value="weak" selected>0.46 - обережний</option>
+              </select>
+            </label>
+            <label>Вміст цукру в цукрі, %
+              <input id="sugarExtractSetting" type="number" min="0" max="100" step="0.5" value="100">
+            </label>
+            <label>Крохмаль у борошні, %
+              <input id="flourExtractSetting" type="number" min="0" max="100" step="0.5" value="70">
+            </label>
+            <label class="checkbox-label">
+              <input id="applyGear" type="checkbox" checked>
+              Вплив на розрахунки
+            </label>
+          </div>
+          <p class="hint">Це не заміна реальних режимів перегону. Якщо увімкнено вплив на розрахунки, профіль і параметри обладнання дають м'яку поправку там, де це можливо.</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="result" aria-live="polite" hidden>
+        <h2><svg class="icon"><use href="#icon-gauge"></use></svg>Результат</h2>
+        <div id="metrics"></div>
+        <div class="formula" id="formula">
+          <button class="formula-toggle" id="formulaToggle" type="button" aria-expanded="false">Формула</button>
+          <div class="formula-body" id="formulaBody"></div>
+        </div>
+        <div class="note">Перевіряйте місцеві правила виробництва алкоголю і використовуйте калькулятор як технологічну підказку, а не як лабораторну таблицю.</div>
+      </aside>
+    </div>
+    <div class="footer-actions">
+      <button class="secondary-button footer-toggle" id="languageToggle" type="button" aria-label="English language" title="English language">EN</button>
+      <button class="secondary-button footer-toggle" id="themeToggle" type="button" aria-label="Перемкнути тему" title="Перемкнути тему">
+        <svg class="icon" id="themeIcon"><use href="#icon-sun"></use></svg>
+      </button>
+      <button class="print-button" id="printOpen" type="button">
+        <svg class="icon"><use href="#icon-printer"></use></svg>
+        Надрукувати
+      </button>
+    </div>
+
+    <div class="print-modal" id="printModal" hidden>
+      <div class="print-sheet" role="dialog" aria-modal="true" aria-labelledby="printTitle">
+        <div class="panel-heading">
+          <h2 id="printTitle"><svg class="icon"><use href="#icon-printer"></use></svg>Друк звіту</h2>
+          <button class="icon-button" id="printClose" type="button" aria-label="Закрити друк">×</button>
+        </div>
+        <div class="print-options">
+          <label class="checkbox-label"><input id="printMash" type="checkbox" checked> Вихід сирцю</label>
+          <label class="checkbox-label"><input id="printRaw" type="checkbox" checked> Ректифікація</label>
+          <label class="checkbox-label"><input id="printFinal" type="checkbox" checked> Фінальний продукт</label>
+          <label class="checkbox-label"><input id="printDilute" type="checkbox" checked> Розбавлення</label>
+          <label class="checkbox-label"><input id="printBoiler" type="checkbox" checked> Спирт у кубі</label>
+          <label class="checkbox-label"><input id="printEquipment" type="checkbox" checked> Загальні налаштування</label>
+        </div>
+        <div class="print-actions">
+          <button class="secondary-button" id="printCancel" type="button">Скасувати</button>
+          <button class="print-button" id="printBuild" type="button">
+            <svg class="icon"><use href="#icon-printer"></use></svg>
+            Сформувати
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="print-modal" id="efficiencyModal" hidden>
+      <div class="print-sheet" role="dialog" aria-modal="true" aria-labelledby="efficiencyTitle">
+        <div class="panel-heading">
+          <h2 id="efficiencyTitle"><svg class="icon"><use href="#icon-scale"></use></svg>Подробиці ефективності</h2>
+          <button class="icon-button" id="efficiencyClose" type="button" aria-label="Закрити подробиці">×</button>
+        </div>
+        <div class="efficiency-details" id="efficiencyDetails"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+const $ = (id) => document.getElementById(id);
+const panels = [...document.querySelectorAll(".panel")];
+const tabs = [...document.querySelectorAll(".tab")];
+const finalDrinkOptions = [...document.querySelectorAll(".final-drink-option")];
+const methodOptions = [...document.querySelectorAll(".method-option")];
+const introItems = [...document.querySelectorAll(".intro-item[data-intro-tab]")];
+const workspace = document.querySelector(".workspace");
+const resultAside = document.querySelector(".result");
+const themeToggle = $("themeToggle");
+const themeIcon = $("themeIcon").querySelector("use");
+const settingsOpen = $("settingsOpen");
+const settingsClose = $("settingsClose");
+const settingsModal = $("settingsModal");
+const printOpen = $("printOpen");
+const printClose = $("printClose");
+const printCancel = $("printCancel");
+const printBuild = $("printBuild");
+const printModal = $("printModal");
+const efficiencyModal = $("efficiencyModal");
+const efficiencyClose = $("efficiencyClose");
+const efficiencyDetails = $("efficiencyDetails");
+const formula = $("formula");
+const formulaToggle = $("formulaToggle");
+const formulaBody = $("formulaBody");
+const calcEfficiencyOpen = $("calcEfficiencyOpen");
+const actualEfficiencyOpen = $("actualEfficiencyOpen");
+const languageToggle = $("languageToggle");
+const homeOpen = $("homeOpen");
+let activeTab = null;
+let activeFinalDrink = "gin";
+let currentLang = localStorage.getItem("distillery-lang") || "uk";
+let transferRawVolume = 0;
+let transferRawAbv = 30;
+let transferProductVolume = 0;
+let transferProductAbv = 96;
+let myRawVolumeValue = 0;
+let myProductVolumeValue = 0;
+let myFinalVolumeValue = 0;
+
+const enText = {
+  "Дистилярій": "Distillarium",
+  "дистилярій": "distillarium",
+  "Калькулятор для браги, сирцю, розбавлення та оцінки спирту в кубі. Значення орієнтовні, з відкритими коефіцієнтами.": "Calculator for mash, low wines, dilution and boiler alcohol estimation. Values are approximate, with open coefficients.",
+  "Розрахункова ефективність": "Calculated efficiency",
+  "Фактична ефективність": "Actual efficiency",
+  "Подробиці ефективності": "Efficiency details",
+  "На головну": "Home",
+  "калібрування: 20 °C": "calibration: 20 °C",
+  "Вихід сирцю": "Low-wine yield",
+  "Ректифікація": "Rectification",
+  "Фінальний продукт": "Final product",
+  "Розбавлення": "Dilution",
+  "Спирт у кубі": "Boiler alcohol",
+  "Розрахунок виходу сирцю з сировини": "Low-wine yield from raw material",
+  "З чого почати": "Where to start",
+  "Оцінює потенційний абсолютний спирт із сировини та орієнтовний об'єм сирцю потрібної міцності.": "Estimates potential absolute alcohol from raw material and the expected low-wine volume at the chosen strength.",
+  "Рахує голови, хвости й тіло після відсікання з урахуванням міцності сирцю та температурної поправки.": "Calculates heads, tails and hearts after cuts, accounting for low-wine strength and temperature correction.",
+  "Переводить ректифікат у вибраний напій, враховуючи міцність, хвости та нетоварний відбір для джину.": "Converts rectified spirit into the selected drink, accounting for strength, tails and the non-saleable gin cut.",
+  "У шапці показується розрахункова ефективність усього ланцюжка, а фактична з'явиться після введення реального об'єму в одному з етапів.": "The header shows the calculated efficiency of the whole chain, while actual efficiency appears after you enter a real volume in one of the stages.",
+  "Сировина": "Raw material",
+  "Цукор": "Sugar",
+  "Борошно": "Flour",
+  "Маса сировини, кг": "Raw material mass, kg",
+  "Маса сировини": "Raw material mass",
+  "База виходу": "Yield basis",
+  "Міцність очікуваного сирцю, %": "Expected low-wine ABV, %",
+  "Вміст цукру або крохмалю та базовий коефіцієнт виходу беруться з глобальних налаштувань обладнання.": "Sugar or starch content and the base yield coefficient are taken from global equipment settings.",
+  "Об'єм сирцю, л": "Low-wine volume, L",
+  "Показ спиртометра, %": "Alcoholmeter reading, %",
+  "Температура проби, °C": "Sample temperature, °C",
+  "Міцність продукту після ректифікації, %": "Product ABV after rectification, %",
+  "Голови, % від АС": "Heads, % of AA",
+  "Хвости, % від АС": "Tails, % of AA",
+  "Температурна поправка є наближенням: для теплого зразка фактичну міцність зменшуємо приблизно на 0.3 % об. за кожен градус вище 20 °C.": "Temperature correction is approximate: for a warm sample, reduce actual ABV by about 0.3 percentage points for each degree above 20 °C.",
+  "Вибір фінального продукту": "Final product selection",
+  "Джин 42%": "Gin 42%",
+  "Сирець 30%": "Low wine 30%",
+  "Дистилят 65%": "Distillate 65%",
+  "Напій 40%": "Drink 40%",
+  "Спирт 96%": "Spirit 96%",
+  "Об'єм ректифікату, л": "Rectified spirit volume, L",
+  "Міцність ректифікату, %": "Rectified spirit ABV, %",
+  "Нетоварний відбір джину, % від АС": "Non-saleable gin cut, % of AA",
+  "Розрахунок переводить об'єм після ректифікації у вибраний фінальний продукт з урахуванням хвостів і нетоварного відбору.": "The calculation converts rectified volume into the selected final product, accounting for tails and non-saleable cut.",
+  "Розбавлення водою": "Dilution with water",
+  "Початковий об'єм, л": "Initial volume, L",
+  "Початкова міцність, %": "Initial ABV, %",
+  "Бажана міцність, %": "Target ABV, %",
+  "Стискання суміші, % від доданої води": "Mixture contraction, % of added water",
+  "Класичний розрахунок C1 x V1 = C2 x V2 не враховує повністю контракцію спирт-водної суміші, тому для точного доведення міцності фінальне коригування краще робити після відстоювання і виміру при 20 °C.": "The classic C1 x V1 = C2 x V2 calculation does not fully account for alcohol-water contraction, so final proof correction is best done after resting and measuring at 20 °C.",
+  "Вміст спирту в кубі за температурою кипіння": "Boiler alcohol by boiling temperature",
+  "Температура в кубі, °C": "Boiler temperature, °C",
+  "Атмосферний тиск, мм рт. ст.": "Atmospheric pressure, mmHg",
+  "Оцінка побудована на інтерполяції таблиці кипіння водно-спиртової суміші при 760 мм рт. ст. Поправка на тиск приблизна: нижчий тиск знижує температуру кипіння.": "The estimate uses interpolation of a water-alcohol boiling table at 760 mmHg. Pressure correction is approximate: lower pressure lowers boiling temperature.",
+  "Налаштування обладнання": "Equipment settings",
+  "Загальні налаштування": "General settings",
+  "Діаметр колони, мм": "Column diameter, mm",
+  "Висота насадкової частини, см": "Packed section height, cm",
+  "Метод перегону": "Distillation method",
+  "Простий перегін": "Pot still",
+  "Колона з укріпленням": "Column with strengthening",
+  "База виходу з крохмалю": "Starch yield basis",
+  "0.718 - теоретичний максимум": "0.718 - theoretical maximum",
+  "0.61 - хороший реальний": "0.61 - good real-world",
+  "0.56 - середній побутовий": "0.56 - average home process",
+  "0.46 - обережний": "0.46 - conservative",
+  "Вміст цукру в цукрі, %": "Sugar content in sugar, %",
+  "Крохмаль у борошні, %": "Starch in flour, %",
+  "Вплив на розрахунки": "Affects calculations",
+  "Корисний відбір": "Useful cut",
+  "Втрати перегону": "Distillation losses",
+  "Міцність продукту": "Product ABV",
+  "Крохмаль": "Starch",
+  "Це не заміна реальних режимів перегону. Якщо увімкнено вплив на розрахунки, профіль і параметри обладнання дають м'яку поправку там, де це можливо.": "This is not a replacement for real distillation regimes. If calculation impact is enabled, the profile and equipment parameters apply a soft correction where possible.",
+  "Результат": "Result",
+  "Формула": "Formula",
+  "Перевіряйте місцеві правила виробництва алкоголю і використовуйте калькулятор як технологічну підказку, а не як лабораторну таблицю.": "Check local alcohol-production laws and use the calculator as a technical aid, not as a laboratory table.",
+  "Надрукувати": "Print",
+  "Друк звіту": "Print report",
+  "Обладнання": "Equipment",
+  "Скасувати": "Cancel",
+  "Сформувати": "Build",
+  "Потенційний абсолютний спирт": "Potential absolute alcohol",
+  "Фактичний об'єм, л": "Actual volume, L",
+  "Співпадіння з очікуваним": "Match with expected",
+  "Голови": "Heads",
+  "Хвости": "Tails",
+  "Тіло після відсікання": "Hearts after cuts",
+  "АС після ректифікації": "AA after rectification",
+  "Потенційний АС": "Potential AA",
+  "Абсолютний спирт": "Absolute alcohol",
+  "Вміст цукру/крохмалю": "Sugar/starch content",
+  "Базовий максимум": "Base maximum",
+  "Об'єм ректифікату": "Rectified spirit volume",
+  "Об'єм фінального продукту": "Final product volume",
+  "Продукт": "Product",
+  "Початковий об'єм": "Initial volume",
+  "Початкова міцність": "Initial ABV",
+  "Бажана міцність": "Target ABV",
+  "Температура в кубі": "Boiler temperature",
+  "Атмосферний тиск": "Atmospheric pressure",
+  "Температура до 760 мм": "Temperature at 760 mmHg",
+  "Оцінка спирту в рідині": "Estimated alcohol in liquid",
+  "Діаметр колони": "Column diameter",
+  "Висота насадкової частини": "Packed section height",
+  "Вміст цукру": "Sugar content",
+  "Вплив на ректифікацію": "Affects rectification",
+  "Орієнтовний корисний відбір": "Estimated useful cut",
+  "Орієнтовні втрати перегону": "Estimated distillation losses",
+  "Орієнтовна міцність продукту": "Estimated product ABV",
+  "джині": "gin",
+  "сирцю": "low wine",
+  "дистиляту": "distillate",
+  "напою": "drink",
+  "спирту": "spirit",
+  "Нетоварний відбір джину": "Non-saleable gin cut",
+  "Додати води": "Add water",
+  "Фінальний об'єм без контракції": "Final volume without contraction",
+  "Оцінка об'єму після стискання": "Estimated volume after contraction",
+  "Можлива міцність після стискання": "Possible ABV after contraction",
+  "Оцінка спирту в рідині куба": "Estimated alcohol in boiler liquid",
+  "Температура, приведена до 760 мм": "Temperature adjusted to 760 mmHg",
+  "Груба оцінка спирту в парі": "Rough vapor alcohol estimate",
+  "Діапазон довіри": "Confidence range",
+  "орієнтовний": "approximate",
+  "Потенціал сировини": "Raw material potential",
+  "АС для порівняння": "AA used for comparison",
+  "Ректифікат у розрахунку": "Rectified spirit in calculation",
+  "Що потрібно": "Needed",
+  "Фінальний продукт у розрахунку": "Final product in calculation",
+  "Відсікання у фінальному продукті": "Final product cuts",
+  "Де просідає": "Where it drops",
+  "Розрахунок": "Calculation",
+  "Поки немає фактичних даних": "No actual data yet",
+  "Фактична ефективність з'явиться після введення хоча б одного фактичного об'єму.": "Actual efficiency appears after entering at least one actual volume.",
+  "введіть фактичний об'єм у сирці, ректифікації або фінальному продукті": "enter an actual volume in low-wine yield, rectification or final product",
+  "увімкнено": "enabled",
+  "вимкнено": "disabled",
+  "так": "yes",
+  "ні": "no",
+  "не вказано": "not specified"
+};
+
+const enAttributes = {
+  "Обладнання": "Equipment",
+  "Загальні налаштування": "General settings",
+  "Перемкнути тему": "Toggle theme",
+  "English language": "Українська мова",
+  "Світла тема": "Light theme",
+  "Темна тема": "Dark theme",
+  "увімкнено": "enabled",
+  "вимкнено": "disabled",
+  "так": "yes",
+  "ні": "no",
+  "не вказано": "not specified",
+  "Закрити налаштування": "Close settings",
+  "Закрити друк": "Close print",
+  "Закрити подробиці": "Close details",
+  "Частка абсолютного спирту, яку плануєте відокремити як головну фракцію. Типово це кілька відсотків від АС у сирці.": "The share of absolute alcohol you plan to separate as heads. Typically a few percent of AA in the low wines.",
+  "Частка абсолютного спирту, яку не беремо в основний продукт через хвостові фракції або зупинку відбору.": "The share of absolute alcohol not taken into the main product because of tails or stopping the cut.",
+  "Коли спирт змішується з водою, фінальний об'єм стає трохи меншим за просту суму об'ємів. Це і є контракція, або стискання суміші.": "When alcohol is mixed with water, the final volume is slightly smaller than the simple sum. This is contraction.",
+  "Ефективність процесу": "Process efficiency",
+  "Розділи калькулятора": "Calculator sections",
+  "Додаткові інструменти": "Additional tools",
+  "На головну": "Home"
+};
+
+const originalText = new WeakMap();
+const originalAttrs = new WeakMap();
+
+function translateText(text) {
+  if (currentLang !== "en") return text;
+  if (enText[text]) return enText[text];
+  const rawMatch = text.match(/^Орієнтовний об'єм (.+) сирцю$/);
+  if (rawMatch) return `Estimated ${rawMatch[1]} low-wine volume`;
+  const finalMatch = text.match(/^Об'єм фінального продукту (.+)$/);
+  if (finalMatch) return `Final product volume ${finalMatch[1]}`;
+  return text;
+}
+
+function translateAttribute(value) {
+  return currentLang === "en" ? enAttributes[value] || enText[value] || value : value;
+}
+
+function applyTranslations(root = document.body) {
+  document.documentElement.lang = currentLang;
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || ["SCRIPT", "STYLE", "SVG"].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      if (parent.closest("#languageToggle")) return NodeFilter.FILTER_REJECT;
+      if (parent.closest("#calcEfficiencyValue, #actualEfficiencyValue")) return NodeFilter.FILTER_REJECT;
+      return node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    if (!originalText.has(node)) originalText.set(node, node.textContent);
+    const base = originalText.get(node);
+    const trimmed = base.trim();
+    const translated = translateText(trimmed);
+    node.textContent = base.replace(trimmed, translated);
+  });
+
+  root.querySelectorAll?.("[aria-label], [title], [data-tip]").forEach((element) => {
+    ["aria-label", "title", "data-tip"].forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const key = `${attr}:${element.getAttribute(attr)}`;
+      if (!originalAttrs.has(element)) originalAttrs.set(element, {});
+      const attrs = originalAttrs.get(element);
+      if (!attrs[attr]) attrs[attr] = element.getAttribute(attr);
+      element.setAttribute(attr, translateAttribute(attrs[attr]));
+    });
+  });
+
+  languageToggle.textContent = currentLang === "uk" ? "EN" : "UK";
+  languageToggle.setAttribute("aria-label", currentLang === "uk" ? "English language" : "Українська мова");
+  languageToggle.title = currentLang === "uk" ? "English language" : "Українська мова";
+}
+
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  localStorage.setItem("distillery-theme", theme);
+  const isDark = theme === "dark";
+  const title = isDark ? "Світла тема" : "Темна тема";
+  themeIcon.setAttribute("href", isDark ? "#icon-sun" : "#icon-moon");
+  themeToggle.title = translateAttribute(title);
+  themeToggle.setAttribute("aria-label", translateAttribute("Перемкнути тему"));
+}
+
+setTheme(localStorage.getItem("distillery-theme") || "dark");
+
+const defaults = {
+  sugar: { extract: 100, efficiency: 88, label: "цукру", yield: 0.681 },
+  flour: { extract: 70, efficiency: 78, label: "крохмалю", yield: 0.718 }
+};
+
+const starchYieldProfiles = {
+  theory: { value: 0.718, label: "теоретичний максимум" },
+  good: { value: 0.61, label: "хороший реальний" },
+  average: { value: 0.56, label: "середній побутовий" },
+  weak: { value: 0.46, label: "обережний" }
+};
+
+const drinks = {
+  gin: { label: "джині", abv: 42 },
+  raw: { label: "сирцю", abv: 30 },
+  distillate: { label: "дистиляту", abv: 65 },
+  vodka: { label: "напою", abv: 40 },
+  spirit: { label: "спирту", abv: 96 }
+};
+
+const boilingTable = [
+  [0, 100.0], [5, 96.2], [7.74, 94.0], [10, 93.5], [15, 91.3], [20, 89.4],
+  [25, 87.8], [30, 86.4], [35, 85.2], [40, 84.1], [45, 83.2],
+  [50, 82.4], [55, 81.8], [60, 81.2], [65, 80.7], [70, 80.3],
+  [75, 79.9], [80, 79.5], [85, 79.1], [90, 78.8], [95, 78.4],
+  [97, 78.3]
+];
+
+function n(id) {
+  const element = $(id);
+  const value = Number(element?.value);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function nf(id, fallback) {
+  const element = $(id);
+  const value = Number(element?.value);
+  const attrValue = Number(element?.getAttribute("value"));
+  if (Number.isFinite(value) && value > 0) return value;
+  if (Number.isFinite(attrValue) && attrValue > 0) return attrValue;
+  return fallback;
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function fmt(value, digits = 2, suffix = "") {
+  if (!Number.isFinite(value)) return "—";
+  const localizedSuffix = currentLang === "en"
+    ? suffix.replaceAll(" л", " L").replaceAll(" АС", " AA").replaceAll(" об.", " vol.").replaceAll(" мм рт. ст.", " mmHg")
+    : suffix;
+  return `${value.toLocaleString(currentLang === "en" ? "en-US" : "uk-UA", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits
+  })}${localizedSuffix}`;
+}
+
+function metric(row) {
+  const [label, value, action, icon = "icon-percent", variant = ""] = row;
+  if (variant === "subhead") {
+    return `<div class="metric-subhead">${label}</div>`;
+  }
+  if (variant === "field") {
+    const actionIcons = {
+      "send-raw-actual": ["<path d=\"M9 2h6\"></path><path d=\"M10 2v6l-5.5 9.5A3 3 0 0 0 7.1 22h9.8a3 3 0 0 0 2.6-4.5L14 8V2\"></path><path d=\"M7.5 16h9\"></path>", "На ректифікацію"],
+      "send-final-actual": ["<path d=\"M10 2h4\"></path><path d=\"M11 2v5l-3 3v9a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-9l-3-3V2\"></path><path d=\"M9 14h6\"></path>", "На фінальний продукт"]
+    };
+    const button = icon && actionIcons[icon] ? `<button class="metric-action" type="button" data-action="${icon}" aria-label="${actionIcons[icon][1]}" title="${actionIcons[icon][1]}"><span class="arrow">→</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${actionIcons[icon][0]}</svg></button>` : "";
+    return `<label class="metric-field"><span>${label}</span><input id="${action}" type="text" inputmode="decimal" value="${value}">${button}</label>`;
+  }
+  const actionIcons = {
+    "send-raw": ["<path d=\"M9 2h6\"></path><path d=\"M10 2v6l-5.5 9.5A3 3 0 0 0 7.1 22h9.8a3 3 0 0 0 2.6-4.5L14 8V2\"></path><path d=\"M7.5 16h9\"></path>", "На ректифікацію"],
+    "send-final": ["<path d=\"M10 2h4\"></path><path d=\"M11 2v5l-3 3v9a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-9l-3-3V2\"></path><path d=\"M9 14h6\"></path>", "На фінальний продукт"],
+    "send-dilute": ["<path d=\"M12 2.5 6.5 10A7 7 0 1 0 17.5 10L12 2.5z\"></path>", "На розбавлення"]
+  };
+  const actionButton = action ? `<button class="metric-action" type="button" data-action="${action}" aria-label="${actionIcons[action][1]}" title="${actionIcons[action][1]}"><span class="arrow">→</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${actionIcons[action][0]}</svg></button>` : "";
+  const className = variant === "primary" ? `metric primary${action ? " has-action" : ""}` : `metric${variant ? ` ${variant}` : ""}`;
+  return `<div class="${className}"><svg class="icon"><use href="#${icon}"></use></svg><span>${label}</span><strong>${value}</strong>${actionButton}</div>`;
+}
+
+function setResult(rows, formulaText) {
+  workspace.classList.remove("start-screen");
+  resultAside.hidden = false;
+  $("metrics").innerHTML = rows.map(metric).join("");
+  formulaBody.textContent = formulaText;
+  applyTranslations($("metrics"));
+  applyTranslations(formula);
+}
+
+function correctedAbv(reading, temp) {
+  return clamp(reading - ((temp - 20) * 0.3), 0, 100);
+}
+
+function efficiencyMood(value) {
+  if (value < 70) return "☹";
+  if (value < 85) return "●";
+  return "☺";
+}
+
+function equipmentProfile() {
+  const method = $("distillMethod").value;
+  const diameter = clamp(n("columnDiameter"), 20, 120);
+  const height = clamp(n("columnHeight"), 0, 250);
+  const affectCalculations = $("applyGear").checked;
+
+  const base = {
+    pot: { usable: 78, loss: 12, product: 55 },
+    column: { usable: 85, loss: 8, product: 92 },
+    reflux: { usable: 88, loss: 6, product: 95 }
+  }[method];
+
+  const diameterBonus = clamp((diameter - 38) / 40, -0.25, 0.35);
+  const heightBonus = clamp((height - 80) / 120, -0.25, 0.35);
+  const qualityBonus = method === "pot" ? 0 : (diameterBonus + heightBonus) / 2;
+
+  return {
+    affectEfficiency: affectCalculations,
+    affectRaw: affectCalculations,
+    method,
+    usable: clamp(base.usable + qualityBonus * 6, 60, 94),
+    loss: clamp(base.loss - qualityBonus * 3, 3, 20),
+    product: clamp(base.product + qualityBonus * 4, method === "pot" ? 35 : 75, method === "reflux" ? 96.5 : 94)
+  };
+}
+
+function yieldFor(type) {
+  if (type === "sugar") return defaults.sugar.yield;
+  return (starchYieldProfiles[$("starchYieldProfile").value] || starchYieldProfiles.average).value;
+}
+
+function yieldProfileText(type) {
+  if (type === "sugar") return "0.681 л АС/кг цукру";
+  const profile = starchYieldProfiles[$("starchYieldProfile").value] || starchYieldProfiles.average;
+  return `${profile.value} л АС/кг крохмалю (${profile.label})`;
+}
+
+function extractFor(type) {
+  const settingId = {
+    sugar: "sugarExtractSetting",
+    flour: "flourExtractSetting"
+  }[type];
+  return clamp(n(settingId), 0, 100);
+}
+
+function updateDrinkFields() {
+  $("finalGinWasteLabel").hidden = activeFinalDrink !== "gin";
+}
+
+function equipmentText() {
+  const profile = equipmentProfile();
+  return profile;
+}
+
+function calcMash() {
+  const type = $("feedstock").value;
+  const cfg = defaults[type];
+  const gear = equipmentText();
+  const mass = n("feedMass");
+  const extractPct = extractFor(type);
+  const extract = extractPct / 100;
+  const rawAbv = Math.max(n("rawAbvFromMash"), 0.1) / 100;
+  const myRawVolume = myRawVolumeValue;
+  const fermentable = mass * extract;
+  const yieldRate = yieldFor(type);
+  const absoluteAlcohol = fermentable * yieldRate;
+  const rawVolume = absoluteAlcohol / rawAbv;
+  const matchPct = rawVolume > 0 ? myRawVolume / rawVolume * 100 : 0;
+  transferRawVolume = rawVolume;
+  transferRawAbv = rawAbv * 100;
+  const matchVariant = matchPct < 60 ? "match-red" : matchPct < 85 ? "match-yellow" : "match-green";
+
+  const rows = [
+    ["Потенційний абсолютний спирт", fmt(absoluteAlcohol, 2, " л АС")],
+    [`Орієнтовний об'єм ${fmt(rawAbv * 100, 1, "%")} сирцю`, fmt(rawVolume, 2, " л"), "send-raw", "icon-flask", "primary"],
+    ["Фактичний об'єм, л", myRawVolume > 0 ? String(myRawVolume) : "", "myRawVolume", "send-raw-actual", "field"]
+  ];
+  if (myRawVolume > 0) {
+    rows.push(["Співпадіння з очікуваним", fmt(matchPct, 1, " %"), null, "icon-scale", matchVariant]);
+  }
+  setResult(rows, `маса x вміст ${cfg.label} з налаштувань x ${yieldRate} л АС/кг; сирець = АС / міцність сирцю; база: ${yieldProfileText(type)}`);
+}
+
+function calcRaw() {
+  equipmentText();
+  const volume = n("rawVolume");
+  const meter = clamp(n("rawMeterAbv"), 0, 100);
+  const temp = n("sampleTemp");
+  const productAbvPct = Math.max(n("productAbv"), 0.1);
+  const productAbv = productAbvPct / 100;
+  const myProductVolume = myProductVolumeValue;
+  const headsPct = clamp(n("headsPct"), 0, 100);
+  const tailsPct = clamp(n("tailsPct"), 0, 100);
+  $("headsValue").textContent = fmt(headsPct, 1, " %");
+  $("tailsValue").textContent = fmt(tailsPct, 1, " %");
+  const trueAbv = correctedAbv(meter, temp);
+  const absoluteAlcohol = volume * trueAbv / 100;
+  const headsAlcohol = absoluteAlcohol * headsPct / 100;
+  const tailsAlcohol = absoluteAlcohol * tailsPct / 100;
+  const bodyAlcohol = Math.max(absoluteAlcohol - headsAlcohol - tailsAlcohol, 0);
+  const productVolume = bodyAlcohol / productAbv;
+  const matchPct = productVolume > 0 ? myProductVolume / productVolume * 100 : 0;
+  const matchVariant = matchPct < 60 ? "match-red" : matchPct < 85 ? "match-yellow" : "match-green";
+  transferProductVolume = productVolume;
+  transferProductAbv = productAbvPct;
+
+  const rows = [
+    ["Голови", fmt(headsAlcohol, 2, " л")],
+    ["Хвости", fmt(tailsAlcohol, 2, " л")],
+    ["Тіло після відсікання", fmt(productVolume, 2, " л"), "send-final", "icon-droplet", "primary"],
+    ["Фактичний об'єм, л", myProductVolume > 0 ? String(myProductVolume) : "", "myProductVolume", "send-final-actual", "field"]
+  ];
+  if (myProductVolume > 0) {
+    rows.push(["Співпадіння з очікуваним", fmt(matchPct, 1, " %"), null, "icon-scale", matchVariant]);
+  }
+  setResult(rows, `міцність(20 °C) = показ - (температура - 20) x 0.3; тіло = (АС у сирці - голови - хвости) / міцність продукту`);
+}
+
+function calcFinal() {
+  updateDrinkFields();
+  const sourceVolume = n("finalSourceVolume");
+  const sourceAbv = clamp(n("finalSourceAbv"), 0.1, 99.9);
+  const drink = drinks[activeFinalDrink];
+  const tailsPct = clamp(n("finalTailsPct"), 0, 95);
+  $("finalTailsValue").textContent = fmt(tailsPct, 1, " %");
+  const ginWastePct = activeFinalDrink === "gin" ? clamp(n("finalGinWastePct"), 0, 95) : 0;
+  const keptShare = Math.max(1 - ((tailsPct + ginWastePct) / 100), 0.01);
+  const sourceAlcohol = sourceVolume * sourceAbv / 100;
+  const finalAlcohol = sourceAlcohol * keptShare;
+  const tailsAlcohol = sourceAlcohol * tailsPct / 100;
+  const ginWasteAlcohol = sourceAlcohol * ginWastePct / 100;
+  const finalVolume = finalAlcohol / (drink.abv / 100);
+  const matchPct = finalVolume > 0 ? myFinalVolumeValue / finalVolume * 100 : 0;
+  const matchVariant = matchPct < 60 ? "match-red" : matchPct < 85 ? "match-yellow" : "match-green";
+
+  const rows = [
+    ["АС після ректифікації", fmt(sourceAlcohol, 2, " л АС")],
+    ["Хвости", fmt(tailsAlcohol, 2, " л")],
+    ...(activeFinalDrink === "gin" ? [["Нетоварний відбір джину", fmt(ginWasteAlcohol, 2, " л")]] : []),
+    [`Об'єм фінального продукту ${fmt(drink.abv, 1, "%")}`, fmt(finalVolume, 2, " л"), null, "icon-droplet", "primary"],
+    ["Фактичний об'єм, л", myFinalVolumeValue > 0 ? String(myFinalVolumeValue) : "", "myFinalVolume", null, "field"]
+  ];
+  if (myFinalVolumeValue > 0) {
+    rows.push(["Співпадіння з очікуваним", fmt(matchPct, 1, " %"), null, "icon-scale", matchVariant]);
+  }
+  setResult(rows, `фінальний продукт = об'єм ректифікату x міцність ректифікату / міцність вибраного продукту x (1 - хвости - нетоварний відбір)`);
+}
+
+function calcDilute() {
+  const startVolume = n("startVolume");
+  const startAbv = clamp(n("startAbv"), 0, 100);
+  const targetAbv = Math.max(clamp(n("targetAbv"), 0.1, 100), 0.1);
+  const contraction = clamp(n("contractionPct"), 0, 10) / 100;
+  const finalVolume = startVolume * startAbv / targetAbv;
+  const water = Math.max(finalVolume - startVolume, 0);
+  const estimatedFinal = startVolume + water * (1 - contraction);
+  const afterContractionAbv = estimatedFinal > 0 ? (startVolume * startAbv / estimatedFinal) : 0;
+
+  setResult([
+    ["Додати води", fmt(water, 2, " л")],
+    ["Фінальний об'єм без контракції", fmt(finalVolume, 2, " л")],
+    ["Оцінка об'єму після стискання", fmt(estimatedFinal, 2, " л")],
+    ["Можлива міцність після стискання", fmt(afterContractionAbv, 1, " %")]
+  ], `вода = V1 x C1 / C2 - V1; контракція показана окремо як практична поправка`);
+}
+
+function abvFromBoiling(temp, pressure) {
+  const pressureAdjustedTemp = temp - ((pressure - 760) * 0.037);
+  if (pressureAdjustedTemp >= 100) return 0;
+  if (pressureAdjustedTemp <= 78.3) return 97;
+
+  for (let i = 0; i < boilingTable.length - 1; i++) {
+    const [abvA, tempA] = boilingTable[i];
+    const [abvB, tempB] = boilingTable[i + 1];
+    const high = Math.max(tempA, tempB);
+    const low = Math.min(tempA, tempB);
+    if (pressureAdjustedTemp <= high && pressureAdjustedTemp >= low) {
+      const t = (pressureAdjustedTemp - tempA) / (tempB - tempA);
+      return abvA + ((abvB - abvA) * t);
+    }
+  }
+  return 0;
+}
+
+function calcBoiler() {
+  const temp = n("boilerTemp");
+  const pressure = n("pressure");
+  const adjustedTemp = temp - ((pressure - 760) * 0.037);
+  const abv = clamp(abvFromBoiling(temp, pressure), 0, 97);
+  const vaporHint = abv <= 0.05 || adjustedTemp >= 99.95 ? 0 : clamp(abv + (100 - abv) * 0.467, 0, 97);
+
+  setResult([
+    ["Оцінка спирту в рідині куба", fmt(abv, 1, " % об.")],
+    ["Температура, приведена до 760 мм", fmt(adjustedTemp, 1, " °C")],
+    ["Груба оцінка спирту в парі", fmt(vaporHint, 1, " % об.")],
+    ["Діапазон довіри", "орієнтовний"]
+  ], `інтерполяція таблиці кипіння; поправка температури приблизно 0.037 °C на 1 мм рт. ст.`);
+}
+
+function processEfficiency() {
+  const gear = equipmentProfile();
+  const feedType = defaults[$("feedstock")?.value] ? $("feedstock").value : "flour";
+  const feedMass = nf("feedMass", 50);
+  const mashPotential = feedMass * Math.max(extractFor(feedType), 0.1) / 100 * yieldFor(feedType);
+  const rawTrueAbv = correctedAbv(clamp(nf("rawMeterAbv", 30), 0, 100), nf("sampleTemp", 20));
+  const expectedRawVolume = mashPotential / (Math.max(nf("rawAbvFromMash", 30), 0.1) / 100);
+  const rawVolumeForEfficiency = n("rawVolume") > 0 ? n("rawVolume") : expectedRawVolume;
+  const rawAlcohol = rawVolumeForEfficiency * rawTrueAbv / 100;
+  const headsAlcohol = rawAlcohol * clamp(nf("headsPct", 8), 0, 100) / 100;
+  const tailsAlcohol = rawAlcohol * clamp(nf("tailsPct", 10), 0, 100) / 100;
+  const productAbvPct = Math.max(nf("productAbv", 95), 0.1);
+  const bodyAlcohol = Math.max(rawAlcohol - headsAlcohol - tailsAlcohol, 0);
+  const productVolume = bodyAlcohol / (productAbvPct / 100);
+  const sourceAbv = clamp(nf("finalSourceAbv", productAbvPct), 0.1, 99.9);
+  const finalDrink = drinks[activeFinalDrink];
+  const finalTailsPct = clamp(nf("finalTailsPct", 10), 0, 95);
+  const finalGinWastePct = activeFinalDrink === "gin" ? clamp(nf("finalGinWastePct", 8), 0, 95) : 0;
+  const finalKeptShare = Math.max(1 - ((finalTailsPct + finalGinWastePct) / 100), 0.01);
+  const calculatedBaseVolume = productVolume;
+  const calculatedAlcohol = calculatedBaseVolume * sourceAbv / 100 * finalKeptShare;
+  const calculated = mashPotential > 0 ? calculatedAlcohol / mashPotential * 100 : 0;
+  const hasActual = myRawVolumeValue > 0 || myProductVolumeValue > 0 || myFinalVolumeValue > 0;
+  const rawRetention = rawAlcohol > 0 ? bodyAlcohol / rawAlcohol : 0;
+  const rawStageAlcohol = myRawVolumeValue > 0
+    ? myRawVolumeValue * Math.max(n("rawAbvFromMash"), 0.1) / 100
+    : mashPotential;
+  const productStageExpected = rawStageAlcohol * rawRetention;
+  const productStageAlcohol = myProductVolumeValue > 0
+    ? myProductVolumeValue * productAbvPct / 100
+    : productStageExpected;
+  const finalStageExpected = productStageAlcohol * finalKeptShare;
+  const actualAlcohol = myFinalVolumeValue > 0
+    ? myFinalVolumeValue * finalDrink.abv / 100
+    : finalStageExpected;
+  const actual = hasActual && mashPotential > 0 && actualAlcohol > 0 ? actualAlcohol / mashPotential * 100 : null;
+
+  return {
+    mashPotential,
+    rawAlcohol,
+    headsAlcohol,
+    tailsAlcohol,
+    productVolume,
+    sourceVolume: calculatedBaseVolume,
+    sourceAbv,
+    finalDrink,
+    finalKeptShare,
+    calculatedAlcohol,
+    calculated,
+    rawRetention,
+    rawStageAlcohol,
+    productStageAlcohol,
+    actualAlcohol,
+    actual
+  };
+}
+
+function updateEfficiencyHeader() {
+  const data = processEfficiency();
+  const calculated = data.mashPotential > 0 && Number.isFinite(data.calculated) ? data.calculated : 0;
+  $("calcEfficiencyValue").textContent = fmt(calculated, 1, " %");
+  setEfficiencyTone(calcEfficiencyOpen, calculated);
+  actualEfficiencyOpen.hidden = data.actual === null;
+  $("actualEfficiencyValue").textContent = data.actual === null ? "—" : fmt(data.actual, 1, " %");
+  if (data.actual !== null) setEfficiencyTone(actualEfficiencyOpen, data.actual);
+}
+
+function setEfficiencyTone(element, value) {
+  element.classList.remove("eff-low", "eff-mid", "eff-high");
+  if (value < 60) element.classList.add("eff-low");
+  else if (value < 85) element.classList.add("eff-mid");
+  else element.classList.add("eff-high");
+}
+
+function showEfficiencyDetails(kind) {
+  const data = processEfficiency();
+  const title = kind === "actual" ? "Фактична ефективність" : "Розрахункова ефективність";
+  if (kind === "actual" && data.actual === null) {
+    openEfficiencyModal(title, [
+      ["Поки немає фактичних даних", "—"],
+      ["Що потрібно", "введіть фактичний об'єм у сирці, ректифікації або фінальному продукті"]
+    ], "Фактична ефективність з'явиться після введення хоча б одного фактичного об'єму.");
+    return;
+  }
+
+  const value = kind === "actual" ? data.actual : data.calculated;
+  const alcohol = kind === "actual" ? data.actualAlcohol : data.calculatedAlcohol;
+  const finalCutAlcohol = data.sourceVolume * data.sourceAbv / 100 * (1 - data.finalKeptShare);
+  const dropRows = [
+    ["Голови", fmt(data.headsAlcohol / data.mashPotential * 100, 1, " %"), dropClass(data.headsAlcohol, data.mashPotential)],
+    ["Хвости", fmt(data.tailsAlcohol / data.mashPotential * 100, 1, " %"), dropClass(data.tailsAlcohol, data.mashPotential)],
+    ["Фінальний відбір", fmt(finalCutAlcohol / data.mashPotential * 100, 1, " %"), dropClass(finalCutAlcohol, data.mashPotential)]
+  ];
+  openEfficiencyModal(title, [
+    [title, fmt(value, 1, " %")],
+    ["Потенціал сировини", fmt(data.mashPotential, 2, " л АС")],
+    ["АС для порівняння", fmt(alcohol, 2, " л АС")],
+    ["Ректифікат у розрахунку", fmt(data.sourceVolume, 2, " л")],
+    ["Міцність ректифікату", fmt(data.sourceAbv, 1, " %")],
+    ["Фінальний продукт у розрахунку", data.finalDrink.label],
+    ["Відсікання у фінальному продукті", fmt((1 - data.finalKeptShare) * 100, 1, " %")]
+  ], `${title.toLowerCase()} = АС для порівняння / потенціал сировини x 100`, dropRows);
+}
+
+function dropClass(lossAlcohol, potentialAlcohol) {
+  if (!potentialAlcohol || lossAlcohol <= 0) return "";
+  const pct = lossAlcohol / potentialAlcohol * 100;
+  if (pct >= 10) return "drop-high";
+  if (pct >= 4) return "drop-mid";
+  return "";
+}
+
+function openEfficiencyModal(title, detailRows, formulaText, dropRows = []) {
+  $("efficiencyTitle").lastChild.textContent = translateText(title);
+  efficiencyDetails.innerHTML = [
+    ...detailRows.map(([label, value, rowClass = ""]) => `<div class="detail-row ${rowClass}"><span>${translateText(label)}</span><strong>${translateText(value)}</strong></div>`),
+    dropRows.length ? `<div class="drop-summary"><h3>${translateText("Де просідає")}</h3>${dropRows.map(([label, value, rowClass = ""]) => `<div class="drop-row ${rowClass}"><span>${translateText(label)}</span><strong>${translateText(value)}</strong></div>`).join("")}</div>` : "",
+    `<div class="formula detail-formula"><button class="formula-toggle" type="button" aria-expanded="false">${translateText("Формула")}</button><div class="formula-body">${translateText(formulaText)}</div></div>`
+  ].join("");
+  efficiencyModal.hidden = false;
+  efficiencyClose.focus();
+}
+
+function methodLabel(method) {
+  return {
+    pot: "Простий перегін",
+    column: "Колона з укріпленням",
+    reflux: "Ректифікація"
+  }[method] || "Колона з укріпленням";
+}
+
+function currentData() {
+  const gear = equipmentText();
+  const feed = defaults[$("feedstock").value];
+  const rawTrueAbv = correctedAbv(clamp(n("rawMeterAbv"), 0, 100), n("sampleTemp"));
+  const rawAlcohol = n("rawVolume") * rawTrueAbv / 100;
+  const headsAlcohol = rawAlcohol * clamp(n("headsPct"), 0, 100) / 100;
+  const tailsAlcohol = rawAlcohol * clamp(n("tailsPct"), 0, 100) / 100;
+  const productAbvPct = Math.max(n("productAbv"), 0.1);
+  const bodyAlcohol = Math.max(rawAlcohol - headsAlcohol - tailsAlcohol, 0);
+  const productVolume = bodyAlcohol / (productAbvPct / 100);
+  const productMatch = productVolume > 0 ? myProductVolumeValue / productVolume * 100 : 0;
+  const mashTheory = n("feedMass") * extractFor($("feedstock").value) / 100 * yieldFor($("feedstock").value);
+  const mashRawVolume = mashTheory / (Math.max(n("rawAbvFromMash"), 0.1) / 100);
+  const mashMatch = mashRawVolume > 0 ? myRawVolumeValue / mashRawVolume * 100 : 0;
+  const finalDrink = drinks[activeFinalDrink];
+  const finalTailsPct = clamp(n("finalTailsPct"), 0, 95);
+  const finalGinWastePct = activeFinalDrink === "gin" ? clamp(n("finalGinWastePct"), 0, 95) : 0;
+  const finalKeptShare = Math.max(1 - ((finalTailsPct + finalGinWastePct) / 100), 0.01);
+  const finalSourceAlcohol = n("finalSourceVolume") * clamp(n("finalSourceAbv"), 0.1, 99.9) / 100;
+  const finalAlcohol = finalSourceAlcohol * finalKeptShare;
+  const finalVolume = finalAlcohol / (finalDrink.abv / 100);
+  const finalMatch = finalVolume > 0 ? myFinalVolumeValue / finalVolume * 100 : 0;
+  const boilerAdjusted = n("boilerTemp") - ((n("pressure") - 760) * 0.037);
+  const boilerAbv = clamp(abvFromBoiling(n("boilerTemp"), n("pressure")), 0, 97);
+
+  return {
+    gear, feed, rawTrueAbv, rawAlcohol, headsAlcohol, tailsAlcohol,
+    productAbvPct, bodyAlcohol, productVolume, productMatch, mashTheory,
+    mashRawVolume, mashMatch, finalDrink, finalTailsPct, finalGinWastePct, finalSourceAlcohol,
+    finalVolume, finalMatch, boilerAdjusted, boilerAbv
+  };
+}
+
+function rows(items) {
+  return `<table>${items.map(([label, value]) => `<tr><th>${translateText(label)}</th><td>${translateText(value)}</td></tr>`).join("")}</table>`;
+}
+
+function reportSection(title, items) {
+  return `<section><h2>${translateText(title)}</h2>${rows(items)}</section>`;
+}
+
+function buildPrintDocument() {
+  const data = currentData();
+  const sections = [];
+
+  if ($("printMash").checked) {
+    sections.push(reportSection("Вихід сирцю", [
+      ["Сировина", $("feedstock").selectedOptions[0].textContent],
+      ["База виходу", yieldProfileText($("feedstock").value)],
+      ["Маса сировини", fmt(n("feedMass"), 2, " кг")],
+      ["Вміст цукру/крохмалю", fmt(extractFor($("feedstock").value), 1, " %")],
+      ["Потенційний АС", fmt(data.mashTheory, 2, " л АС")],
+      [`Орієнтовний об'єм ${fmt(n("rawAbvFromMash"), 1, "%")} сирцю`, fmt(data.mashRawVolume, 2, " л")],
+      ["Фактичний об'єм", myRawVolumeValue > 0 ? fmt(myRawVolumeValue, 2, " л") : "не вказано"],
+      ["Співпадіння з очікуваним", myRawVolumeValue > 0 ? fmt(data.mashMatch, 1, " %") : "—"]
+    ]));
+  }
+
+  if ($("printRaw").checked) {
+    sections.push(reportSection("Ректифікація", [
+      ["Об'єм сирцю", fmt(n("rawVolume"), 2, " л")],
+      ["Голови", fmt(data.headsAlcohol, 2, " л")],
+      ["Хвости", fmt(data.tailsAlcohol, 2, " л")],
+      ["Тіло після відсікання", fmt(data.productVolume, 2, " л")],
+      ["Фактичний об'єм", myProductVolumeValue > 0 ? fmt(myProductVolumeValue, 2, " л") : "не вказано"],
+      ["Співпадіння з очікуваним", myProductVolumeValue > 0 ? fmt(data.productMatch, 1, " %") : "—"]
+    ]));
+  }
+
+  if ($("printFinal").checked) {
+    sections.push(reportSection("Фінальний продукт", [
+      ["Продукт", data.finalDrink.label],
+      ["Об'єм ректифікату", fmt(n("finalSourceVolume"), 2, " л")],
+      ["Міцність ректифікату", fmt(n("finalSourceAbv"), 1, " %")],
+      ["Хвости", fmt(data.finalTailsPct, 1, " %")],
+      ...(activeFinalDrink === "gin" ? [["Нетоварний відбір джину", fmt(data.finalGinWastePct, 1, " %")]] : []),
+      ["АС після ректифікації", fmt(data.finalSourceAlcohol, 2, " л АС")],
+      ["Об'єм фінального продукту", fmt(data.finalVolume, 2, " л")],
+      ["Фактичний об'єм", myFinalVolumeValue > 0 ? fmt(myFinalVolumeValue, 2, " л") : "не вказано"],
+      ["Співпадіння з очікуваним", myFinalVolumeValue > 0 ? fmt(data.finalMatch, 1, " %") : "—"]
+    ]));
+  }
+
+  if ($("printDilute").checked) {
+    const finalVolume = n("startVolume") * clamp(n("startAbv"), 0, 100) / Math.max(clamp(n("targetAbv"), 0.1, 100), 0.1);
+    const water = Math.max(finalVolume - n("startVolume"), 0);
+    sections.push(reportSection("Розбавлення", [
+      ["Початковий об'єм", fmt(n("startVolume"), 2, " л")],
+      ["Початкова міцність", fmt(n("startAbv"), 1, " %")],
+      ["Бажана міцність", fmt(n("targetAbv"), 1, " %")],
+      ["Додати води", fmt(water, 2, " л")],
+      ["Фінальний об'єм без контракції", fmt(finalVolume, 2, " л")]
+    ]));
+  }
+
+  if ($("printBoiler").checked) {
+    sections.push(reportSection("Спирт у кубі", [
+      ["Температура в кубі", fmt(n("boilerTemp"), 1, " °C")],
+      ["Атмосферний тиск", fmt(n("pressure"), 0, " мм рт. ст.")],
+      ["Температура до 760 мм", fmt(data.boilerAdjusted, 1, " °C")],
+      ["Оцінка спирту в рідині", fmt(data.boilerAbv, 1, " % об.")]
+    ]));
+  }
+
+  if ($("printEquipment").checked) {
+    sections.push(reportSection("Загальні налаштування", [
+      ["Діаметр колони", fmt(n("columnDiameter"), 0, " мм")],
+      ["Висота насадкової частини", fmt(n("columnHeight"), 0, " см")],
+      ["Метод перегону", methodLabel($("distillMethod").value)],
+      ["База виходу з крохмалю", yieldProfileText("flour")],
+      ["Вміст цукру", fmt(extractFor("sugar"), 1, " %")],
+      ["Крохмаль у борошні", fmt(extractFor("flour"), 1, " %")],
+      ["Вплив на розрахунки", data.gear.affectRaw ? "так" : "ні"],
+      ["Корисний відбір", fmt(data.gear.usable, 1, " %")],
+      ["Втрати перегону", fmt(data.gear.loss, 1, " %")],
+      ["Міцність продукту", fmt(data.gear.product, 1, " %")]
+    ]));
+  }
+
+  const reportTitle = currentLang === "en" ? "Distillarium report" : "Звіт Дистилярій";
+  const generated = currentLang === "en" ? "Report generated" : "Звіт сформовано";
+  const printLabel = translateText("Надрукувати");
+  return `<!doctype html><html lang="${currentLang}"><head><meta charset="utf-8"><title>${reportTitle}</title><style>
+    body{font-family:Arial,sans-serif;color:#211827;margin:32px;line-height:1.35}
+    h1{margin:0 0 6px;font-size:30px} .date{color:#6f617d;margin-bottom:22px}
+    section{break-inside:avoid;margin:0 0 22px;padding-bottom:14px;border-bottom:1px solid #ddd2ee}
+    h2{font-size:20px;margin:0 0 10px;color:#7c3aed}
+    table{width:100%;border-collapse:collapse} th,td{padding:7px 0;border-bottom:1px solid #eee;text-align:left}
+    th{color:#6f617d;font-weight:700;width:52%} td{font-weight:800}
+    @media print{body{margin:18mm}.no-print{display:none}}
+  </style></head><body><button class="no-print" onclick="window.print()">${printLabel}</button><h1>${translateText("Дистилярій")}</h1><div class="date">${generated} ${new Date().toLocaleString(currentLang === "en" ? "en-US" : "uk-UA")}</div>${sections.join("")}</body></html>`;
+}
+
+function calculate() {
+  if (!activeTab) {
+    workspace.classList.add("start-screen");
+    resultAside.hidden = true;
+    updateEfficiencyHeader();
+    return;
+  }
+  if (activeTab === "mash") calcMash();
+  if (activeTab === "raw") calcRaw();
+  if (activeTab === "final") calcFinal();
+  if (activeTab === "dilute") calcDilute();
+  if (activeTab === "boiler") calcBoiler();
+  updateEfficiencyHeader();
+}
+
+function calcSettings() {
+  const gear = equipmentText();
+
+  setResult([
+    ["Вплив на розрахунки", gear.affectRaw ? "увімкнено" : "вимкнено"],
+    ["База виходу з крохмалю", yieldProfileText("flour")],
+    ["Крохмаль у борошні", fmt(extractFor("flour"), 1, " %")],
+    ["Орієнтовний корисний відбір", fmt(gear.usable, 1, " %")],
+    ["Орієнтовні втрати перегону", fmt(gear.loss, 1, " %")],
+    ["Орієнтовна міцність продукту", fmt(gear.product, 1, " %")]
+  ], "Налаштування використовуються як м'яка поправка там, де це можливо.");
+}
+
+function activateTab(tabName) {
+  activeTab = tabName;
+  tabs.forEach((item) => item.setAttribute("aria-selected", String(item.dataset.tab === activeTab)));
+  panels.forEach((panel) => panel.classList.toggle("active", panel.id === activeTab));
+  calculate();
+}
+
+function showHome() {
+  activeTab = null;
+  tabs.forEach((item) => item.setAttribute("aria-selected", "false"));
+  panels.forEach((panel) => panel.classList.toggle("active", panel.id === "welcome"));
+  calculate();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+homeOpen.addEventListener("click", showHome);
+
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    activateTab(tab.dataset.tab);
+  });
+});
+
+introItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    activateTab(item.dataset.introTab);
+  });
+});
+
+$("metrics").addEventListener("click", (event) => {
+  const action = event.target.closest("[data-action]");
+  if (!action) return;
+  if (action.dataset.action === "send-raw" || action.dataset.action === "send-raw-actual") {
+    const rawVolume = action.dataset.action === "send-raw-actual" && myRawVolumeValue > 0 ? myRawVolumeValue : transferRawVolume;
+    $("rawVolume").value = rawVolume.toFixed(2);
+    $("rawMeterAbv").value = transferRawAbv.toFixed(1);
+    $("sampleTemp").value = 20;
+    activateTab("raw");
+  }
+  if (action.dataset.action === "send-final") {
+    $("finalSourceVolume").value = transferProductVolume.toFixed(2);
+    $("finalSourceAbv").value = transferProductAbv.toFixed(1);
+    activateTab("final");
+  }
+  if (action.dataset.action === "send-final-actual") {
+    const productVolume = myProductVolumeValue > 0 ? myProductVolumeValue : transferProductVolume;
+    $("finalSourceVolume").value = productVolume.toFixed(2);
+    $("finalSourceAbv").value = transferProductAbv.toFixed(1);
+    activateTab("final");
+  }
+  if (action.dataset.action === "send-dilute") {
+    $("startVolume").value = transferProductVolume.toFixed(2);
+    $("startAbv").value = transferProductAbv.toFixed(1);
+    activateTab("dilute");
+  }
+});
+
+$("metrics").addEventListener("input", (event) => {
+  if (!["myRawVolume", "myProductVolume", "myFinalVolume"].includes(event.target.id)) return;
+  const focusedId = event.target.id;
+  const value = Number(event.target.value);
+  if (event.target.id === "myRawVolume") {
+    myRawVolumeValue = Number.isFinite(value) ? value : 0;
+  }
+  if (event.target.id === "myProductVolume") {
+    myProductVolumeValue = Number.isFinite(value) ? value : 0;
+  }
+  if (event.target.id === "myFinalVolume") {
+    myFinalVolumeValue = Number.isFinite(value) ? value : 0;
+  }
+  calculate();
+  const restored = $(focusedId);
+  if (restored) {
+    restored.focus({ preventScroll: true });
+    const end = restored.value.length;
+    restored.setSelectionRange(end, end);
+  }
+});
+
+themeToggle.addEventListener("click", () => {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  setTheme(nextTheme);
+});
+
+languageToggle.addEventListener("click", () => {
+  currentLang = currentLang === "uk" ? "en" : "uk";
+  localStorage.setItem("distillery-lang", currentLang);
+  applyTranslations(document.body);
+  setTheme(document.documentElement.dataset.theme || "dark");
+  calculate();
+});
+
+formulaToggle.addEventListener("click", () => {
+  const isOpen = formula.classList.toggle("open");
+  formulaToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+calcEfficiencyOpen.addEventListener("click", () => {
+  showEfficiencyDetails("calculated");
+});
+
+actualEfficiencyOpen.addEventListener("click", () => {
+  showEfficiencyDetails("actual");
+});
+
+settingsOpen.addEventListener("click", () => {
+  equipmentText();
+  settingsModal.hidden = false;
+  settingsClose.focus();
+});
+
+settingsClose.addEventListener("click", () => {
+  settingsModal.hidden = true;
+  settingsOpen.focus();
+});
+
+settingsModal.addEventListener("click", (event) => {
+  if (event.target === settingsModal) {
+    settingsModal.hidden = true;
+    settingsOpen.focus();
+  }
+});
+
+printOpen.addEventListener("click", () => {
+  printModal.hidden = false;
+  printBuild.focus();
+});
+
+function closePrintModal() {
+  printModal.hidden = true;
+  printOpen.focus();
+}
+
+printClose.addEventListener("click", closePrintModal);
+printCancel.addEventListener("click", closePrintModal);
+
+printModal.addEventListener("click", (event) => {
+  if (event.target === printModal) closePrintModal();
+});
+
+function closeEfficiencyModal() {
+  efficiencyModal.hidden = true;
+  calcEfficiencyOpen.focus();
+}
+
+efficiencyClose.addEventListener("click", closeEfficiencyModal);
+
+efficiencyModal.addEventListener("click", (event) => {
+  const toggle = event.target.closest(".formula-toggle");
+  if (toggle && efficiencyDetails.contains(toggle)) {
+    const wrapper = toggle.closest(".formula");
+    const isOpen = wrapper.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    return;
+  }
+  if (event.target === efficiencyModal) closeEfficiencyModal();
+});
+
+printBuild.addEventListener("click", () => {
+  const report = window.open("", "_blank");
+  if (!report) return;
+  report.document.open();
+  report.document.write(buildPrintDocument());
+  report.document.close();
+  report.focus();
+  report.print();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !settingsModal.hidden) {
+    settingsModal.hidden = true;
+    settingsOpen.focus();
+  }
+  if (event.key === "Escape" && !printModal.hidden) {
+    closePrintModal();
+  }
+  if (event.key === "Escape" && !efficiencyModal.hidden) {
+    closeEfficiencyModal();
+  }
+});
+
+$("feedstock").addEventListener("change", calculate);
+
+finalDrinkOptions.forEach((option) => {
+  option.addEventListener("click", () => {
+    activeFinalDrink = option.dataset.drink;
+    finalDrinkOptions.forEach((item) => item.setAttribute("aria-pressed", String(item === option)));
+    calculate();
+  });
+});
+
+methodOptions.forEach((option) => {
+  option.addEventListener("click", () => {
+    $("distillMethod").value = option.dataset.method;
+    methodOptions.forEach((item) => item.setAttribute("aria-pressed", String(item === option)));
+    calculate();
+  });
+});
+
+document.querySelectorAll("input, select").forEach((input) => {
+  input.addEventListener("input", calculate);
+});
+
+function moveCursorToEnd(input) {
+  if (!input || input.matches("input[type='range'], input[type='checkbox'], select")) return;
+  window.setTimeout(() => {
+    input.focus({ preventScroll: true });
+    const end = input.value.length;
+    try {
+      input.setSelectionRange(end, end);
+    } catch (error) {
+      const value = input.value;
+      input.value = "";
+      input.value = value;
+    }
+  }, 0);
+}
+
+document.querySelectorAll("input:not([type='range']):not([type='checkbox'])").forEach((input) => {
+  input.addEventListener("focus", () => moveCursorToEnd(input));
+  input.addEventListener("pointerup", () => moveCursorToEnd(input));
+});
+
+calculate();
+try {
+  applyTranslations(document.body);
+  calculate();
+} catch (error) {
+  console.error("Translation failed, calculations stayed active:", error);
+}
+</script>
+</body>
+</html>
