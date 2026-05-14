@@ -120,8 +120,9 @@
             <strong id="actualEfficiencyValue">—</strong>
           </button>
         </div>
-        <button class="theme-toggle top-icon-button" id="settingsOpen" type="button" aria-label="Загальні налаштування" title="Загальні налаштування">
+        <button class="theme-toggle top-icon-button settings-open-button" id="settingsOpen" type="button" aria-label="Загальні налаштування" title="Загальні налаштування">
           <svg class="icon"><use href="#icon-alembic"></use></svg>
+          <span>Налаштування</span>
         </button>
         <div class="badge"><svg class="icon"><use href="#icon-thermometer"></use></svg>калібрування: 20 °C</div>
       </div>
@@ -279,12 +280,13 @@
           <div class="method-options" aria-label="Метод перегону">
             <button class="method-option" type="button" data-method="pot" aria-pressed="false">Простий перегін</button>
             <button class="method-option" type="button" data-method="column" aria-pressed="false">Колона з укріпленням</button>
+            <button class="method-option" type="button" data-method="nbk" aria-pressed="false">НБК</button>
             <button class="method-option" type="button" data-method="reflux" aria-pressed="true">Ректифікація</button>
             <input id="distillMethod" type="hidden" value="reflux">
           </div>
           <div class="grid">
-            <label>Діаметр колони, мм
-              <input id="columnDiameter" type="number" min="20" max="120" step="1" value="38">
+            <label>Діаметр колони, дюйми
+              <input id="columnDiameter" type="number" min="0.5" max="6" step="0.1" value="1.5">
             </label>
             <label>Висота насадкової частини, см
               <input id="columnHeight" type="number" min="0" max="250" step="1" value="80">

@@ -94,11 +94,14 @@ const enText = {
   "Оцінка побудована на інтерполяції таблиці кипіння водно-спиртової суміші при 760 мм рт. ст. Поправка на тиск приблизна: нижчий тиск знижує температуру кипіння.": "The estimate uses interpolation of a water-alcohol boiling table at 760 mmHg. Pressure correction is approximate: lower pressure lowers boiling temperature.",
   "Налаштування обладнання": "Equipment settings",
   "Загальні налаштування": "General settings",
+  "Налаштування": "Settings",
   "Діаметр колони, мм": "Column diameter, mm",
+  "Діаметр колони, дюйми": "Column diameter, inches",
   "Висота насадкової частини, см": "Packed section height, cm",
   "Метод перегону": "Distillation method",
   "Простий перегін": "Pot still",
   "Колона з укріпленням": "Column with strengthening",
+  "НБК": "Continuous beer column",
   "База виходу з крохмалю": "Starch yield basis",
   "0.718 - теоретичний максимум": "0.718 - theoretical maximum",
   "0.61 - хороший реальний": "0.61 - good real-world",
@@ -375,17 +378,19 @@ function efficiencyMood(value) {
 
 function equipmentProfile() {
   const method = $("distillMethod").value;
-  const diameter = clamp(n("columnDiameter"), 20, 120);
+  const diameterInches = clamp(n("columnDiameter"), 0.5, 6);
+  const diameterMm = diameterInches * 25.4;
   const height = clamp(n("columnHeight"), 0, 250);
   const affectCalculations = $("applyGear").checked;
 
   const base = {
     pot: { usable: 78, loss: 12, product: 55 },
     column: { usable: 85, loss: 8, product: 92 },
+    nbk: { usable: 86, loss: 7, product: 88 },
     reflux: { usable: 88, loss: 6, product: 95 }
-  }[method];
+  }[method] || { usable: 85, loss: 8, product: 92 };
 
-  const diameterBonus = clamp((diameter - 38) / 40, -0.25, 0.35);
+  const diameterBonus = clamp((diameterMm - 38) / 40, -0.25, 0.35);
   const heightBonus = clamp((height - 80) / 120, -0.25, 0.35);
   const qualityBonus = method === "pot" ? 0 : (diameterBonus + heightBonus) / 2;
 
@@ -699,6 +704,7 @@ function methodLabel(method) {
   return {
     pot: "Простий перегін",
     column: "Колона з укріпленням",
+    nbk: "НБК",
     reflux: "Ректифікація"
   }[method] || "Колона з укріпленням";
 }
@@ -809,7 +815,7 @@ function buildPrintDocument() {
 
   if ($("printEquipment").checked) {
     sections.push(reportSection("Загальні налаштування", [
-      ["Діаметр колони", fmt(n("columnDiameter"), 0, " мм")],
+      ["Діаметр колони", fmt(n("columnDiameter"), 1, "″")],
       ["Висота насадкової частини", fmt(n("columnHeight"), 0, " см")],
       ["Метод перегону", methodLabel($("distillMethod").value)],
       ["База виходу з крохмалю", yieldProfileText("flour")],
@@ -856,6 +862,8 @@ function calcSettings() {
 
   setResult([
     ["Вплив на розрахунки", gear.affectRaw ? "увімкнено" : "вимкнено"],
+    ["Метод перегону", methodLabel(gear.method)],
+    ["Діаметр колони", fmt(n("columnDiameter"), 1, "″")],
     ["База виходу з крохмалю", yieldProfileText("flour")],
     ["Крохмаль у борошні", fmt(extractFor("flour"), 1, " %")],
     ["Орієнтовний корисний відбір", fmt(gear.usable, 1, " %")],

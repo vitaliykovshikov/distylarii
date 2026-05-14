@@ -170,15 +170,33 @@ h1 {
   align-items: baseline;
   gap: 6px;
   min-width: 0;
-  min-height: 0;
-  padding: 0;
-  border: 0;
+  min-height: 34px;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
   border-radius: 8px;
-  background: transparent;
+  background: color-mix(in srgb, var(--panel) 76%, transparent);
   color: var(--ink);
   cursor: pointer;
   text-align: right;
-  box-shadow: none;
+  box-shadow: 0 8px 18px rgba(24, 10, 45, 0.08);
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.efficiency-chip::after {
+  content: "›";
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.efficiency-chip:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+}
+
+.efficiency-chip:active {
+  transform: translateY(1px);
 }
 
 .efficiency-chip span {
@@ -228,6 +246,19 @@ h1 {
 .top-icon-button .icon {
   width: 21px;
   height: 21px;
+}
+
+.settings-open-button {
+  display: inline-flex;
+  width: auto;
+  gap: 8px;
+  padding: 9px 12px;
+}
+
+.settings-open-button span {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .tabs {
@@ -517,7 +548,7 @@ input[type="range"] {
 
 .method-options {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin: 0 0 14px;
 }
@@ -1162,8 +1193,9 @@ input:focus, select:focus {
             <strong id="actualEfficiencyValue">—</strong>
           </button>
         </div>
-        <button class="theme-toggle top-icon-button" id="settingsOpen" type="button" aria-label="Загальні налаштування" title="Загальні налаштування">
+        <button class="theme-toggle top-icon-button settings-open-button" id="settingsOpen" type="button" aria-label="Загальні налаштування" title="Загальні налаштування">
           <svg class="icon"><use href="#icon-alembic"></use></svg>
+          <span>Налаштування</span>
         </button>
         <div class="badge"><svg class="icon"><use href="#icon-thermometer"></use></svg>калібрування: 20 °C</div>
       </div>
@@ -1321,12 +1353,13 @@ input:focus, select:focus {
           <div class="method-options" aria-label="Метод перегону">
             <button class="method-option" type="button" data-method="pot" aria-pressed="false">Простий перегін</button>
             <button class="method-option" type="button" data-method="column" aria-pressed="false">Колона з укріпленням</button>
+            <button class="method-option" type="button" data-method="nbk" aria-pressed="false">НБК</button>
             <button class="method-option" type="button" data-method="reflux" aria-pressed="true">Ректифікація</button>
             <input id="distillMethod" type="hidden" value="reflux">
           </div>
           <div class="grid">
-            <label>Діаметр колони, мм
-              <input id="columnDiameter" type="number" min="20" max="120" step="1" value="38">
+            <label>Діаметр колони, дюйми
+              <input id="columnDiameter" type="number" min="0.5" max="6" step="0.1" value="1.5">
             </label>
             <label>Висота насадкової частини, см
               <input id="columnHeight" type="number" min="0" max="250" step="1" value="80">
@@ -1508,11 +1541,14 @@ const enText = {
   "Оцінка побудована на інтерполяції таблиці кипіння водно-спиртової суміші при 760 мм рт. ст. Поправка на тиск приблизна: нижчий тиск знижує температуру кипіння.": "The estimate uses interpolation of a water-alcohol boiling table at 760 mmHg. Pressure correction is approximate: lower pressure lowers boiling temperature.",
   "Налаштування обладнання": "Equipment settings",
   "Загальні налаштування": "General settings",
+  "Налаштування": "Settings",
   "Діаметр колони, мм": "Column diameter, mm",
+  "Діаметр колони, дюйми": "Column diameter, inches",
   "Висота насадкової частини, см": "Packed section height, cm",
   "Метод перегону": "Distillation method",
   "Простий перегін": "Pot still",
   "Колона з укріпленням": "Column with strengthening",
+  "НБК": "Continuous beer column",
   "База виходу з крохмалю": "Starch yield basis",
   "0.718 - теоретичний максимум": "0.718 - theoretical maximum",
   "0.61 - хороший реальний": "0.61 - good real-world",
@@ -1789,17 +1825,19 @@ function efficiencyMood(value) {
 
 function equipmentProfile() {
   const method = $("distillMethod").value;
-  const diameter = clamp(n("columnDiameter"), 20, 120);
+  const diameterInches = clamp(n("columnDiameter"), 0.5, 6);
+  const diameterMm = diameterInches * 25.4;
   const height = clamp(n("columnHeight"), 0, 250);
   const affectCalculations = $("applyGear").checked;
 
   const base = {
     pot: { usable: 78, loss: 12, product: 55 },
     column: { usable: 85, loss: 8, product: 92 },
+    nbk: { usable: 86, loss: 7, product: 88 },
     reflux: { usable: 88, loss: 6, product: 95 }
-  }[method];
+  }[method] || { usable: 85, loss: 8, product: 92 };
 
-  const diameterBonus = clamp((diameter - 38) / 40, -0.25, 0.35);
+  const diameterBonus = clamp((diameterMm - 38) / 40, -0.25, 0.35);
   const heightBonus = clamp((height - 80) / 120, -0.25, 0.35);
   const qualityBonus = method === "pot" ? 0 : (diameterBonus + heightBonus) / 2;
 
@@ -2113,6 +2151,7 @@ function methodLabel(method) {
   return {
     pot: "Простий перегін",
     column: "Колона з укріпленням",
+    nbk: "НБК",
     reflux: "Ректифікація"
   }[method] || "Колона з укріпленням";
 }
@@ -2223,7 +2262,7 @@ function buildPrintDocument() {
 
   if ($("printEquipment").checked) {
     sections.push(reportSection("Загальні налаштування", [
-      ["Діаметр колони", fmt(n("columnDiameter"), 0, " мм")],
+      ["Діаметр колони", fmt(n("columnDiameter"), 1, "″")],
       ["Висота насадкової частини", fmt(n("columnHeight"), 0, " см")],
       ["Метод перегону", methodLabel($("distillMethod").value)],
       ["База виходу з крохмалю", yieldProfileText("flour")],
@@ -2270,6 +2309,8 @@ function calcSettings() {
 
   setResult([
     ["Вплив на розрахунки", gear.affectRaw ? "увімкнено" : "вимкнено"],
+    ["Метод перегону", methodLabel(gear.method)],
+    ["Діаметр колони", fmt(n("columnDiameter"), 1, "″")],
     ["База виходу з крохмалю", yieldProfileText("flour")],
     ["Крохмаль у борошні", fmt(extractFor("flour"), 1, " %")],
     ["Орієнтовний корисний відбір", fmt(gear.usable, 1, " %")],

@@ -162,15 +162,33 @@ h1 {
   align-items: baseline;
   gap: 6px;
   min-width: 0;
-  min-height: 0;
-  padding: 0;
-  border: 0;
+  min-height: 34px;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
   border-radius: 8px;
-  background: transparent;
+  background: color-mix(in srgb, var(--panel) 76%, transparent);
   color: var(--ink);
   cursor: pointer;
   text-align: right;
-  box-shadow: none;
+  box-shadow: 0 8px 18px rgba(24, 10, 45, 0.08);
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.efficiency-chip::after {
+  content: "›";
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.efficiency-chip:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+}
+
+.efficiency-chip:active {
+  transform: translateY(1px);
 }
 
 .efficiency-chip span {
@@ -220,6 +238,19 @@ h1 {
 .top-icon-button .icon {
   width: 21px;
   height: 21px;
+}
+
+.settings-open-button {
+  display: inline-flex;
+  width: auto;
+  gap: 8px;
+  padding: 9px 12px;
+}
+
+.settings-open-button span {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .tabs {
@@ -509,7 +540,7 @@ input[type="range"] {
 
 .method-options {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin: 0 0 14px;
 }
